@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/view/screen/main/screen_main.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 import 'package:foodiebuddie/view/widgets/text_button_widget.dart';
 
@@ -82,7 +83,13 @@ class ScreenOTP extends StatelessWidget {
               child: ButtonWidget(
                 width: width,
                 text: 'Verify',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => ScreenMain(),
+                    ),
+                  );
+                },
               ),
             )
           ],

@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/view/screen/splash/widgets/image_widget.dart';
 import 'package:foodiebuddie/view/screen/splash/widgets/next_button.dart';
 import 'package:foodiebuddie/view/screen/splash/widgets/screen_indicator.dart';
 import 'package:foodiebuddie/view/screen/splash/widgets/sub_titles.dart';
 import 'package:foodiebuddie/view/screen/splash/widgets/titles.dart';
 
 class ScreenSplash extends StatelessWidget {
-  ScreenSplash({super.key});
-  final images = [
-    'assets/images/food-app.png',
-    'assets/images/food.png',
-    'assets/images/smartphone.png'
-  ];
+  const ScreenSplash({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,13 +22,11 @@ class ScreenSplash extends StatelessWidget {
               child: Column(
                 children: [
                   kHight100,
-                  SizedBox(
+                  kHight50,
+                  ImageWidget(
                     width: width,
-                    height: height * .35,
-                    child: Image.asset(
-                      images[position],
-                      fit: BoxFit.contain,
-                    ),
+                    height: height,
+                    position: position,
                   ),
                   kHight20,
                   ScreenIndicator(position: position),
@@ -40,7 +34,7 @@ class ScreenSplash extends StatelessWidget {
                   Titles(position: position),
                   kHight20,
                   SubTitles(position: position),
-                  kHight50,
+                  kHight30,
                   NextButton(width: width, position: position)
                 ],
               ),
