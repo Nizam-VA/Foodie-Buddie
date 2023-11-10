@@ -37,6 +37,9 @@ class ScreenForgotPassword extends StatelessWidget {
             kHight10,
             TextFieldWidget(
               userController: emailController,
+              validator: (value) {
+                return '';
+              },
               label: 'E-mail id:',
               inputType: TextInputType.emailAddress,
               obscureText: false,

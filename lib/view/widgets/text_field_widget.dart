@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
 
 class TextFieldWidget extends StatelessWidget {
-  const TextFieldWidget(
-      {super.key,
-      required this.userController,
-      required this.label,
-      required this.inputType,
-      required this.obscureText});
+  const TextFieldWidget({
+    super.key,
+    required this.userController,
+    required this.label,
+    required this.inputType,
+    required this.obscureText,
+    required this.validator,
+  });
 
   final TextEditingController userController;
   final String label;
   final TextInputType inputType;
   final bool obscureText;
+  final String? Function(String?) validator;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +22,7 @@ class TextFieldWidget extends StatelessWidget {
       controller: userController,
       obscureText: obscureText,
       keyboardType: inputType,
+      validator: validator,
       decoration: InputDecoration(
         label: Text(label),
         contentPadding: const EdgeInsets.symmetric(
