@@ -3,6 +3,7 @@ import 'package:foodiebuddie/controller/api_services/api_calls.dart';
 import 'package:foodiebuddie/core/constants.dart';
 import 'package:foodiebuddie/view/screen/main/screen_main.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
+import 'package:foodiebuddie/view/widgets/functions/snack_bar.dart';
 import 'package:foodiebuddie/view/widgets/text_button_widget.dart';
 
 class ScreenOTP extends StatelessWidget {
@@ -100,11 +101,15 @@ class ScreenOTP extends StatelessWidget {
                     print(otp);
                     bool value = await ApiServices().otpVerification(otp);
                     if (value) {
+                      showSnack(context, Colors.green,
+                          'Account created successfully');
                       Navigator.of(context).push(
                         MaterialPageRoute(
                           builder: (context) => ScreenMain(),
                         ),
                       );
+                    } else {
+                      showSnack(context, Colors.red, 'Invalid OTP');
                     }
                   },
                 ),

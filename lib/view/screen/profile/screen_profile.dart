@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:foodiebuddie/core/constants.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
+import 'package:foodiebuddie/view/screen/profile/widgets/dialog.dart';
 import 'package:foodiebuddie/view/screen/profile/widgets/sub_text.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenProfile extends StatelessWidget {
   const ScreenProfile({super.key});
@@ -68,7 +70,13 @@ class ScreenProfile extends StatelessWidget {
                     divider2,
                     kHight10,
                     InkWell(
-                        onTap: () {},
+                        onTap: () async {
+                          final preferences =
+                              await SharedPreferences.getInstance();
+                          preferences.setString('token', '');
+
+                          showDialogBox(context);
+                        },
                         child: const SectionHead(heading: 'Logout')),
                   ],
                 ),

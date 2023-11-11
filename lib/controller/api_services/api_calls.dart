@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodiebuddie/model/seller.dart';
 import 'package:foodiebuddie/model/user.dart';
@@ -10,6 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ApiServices {
   static const String baseUrl = 'http://10.0.2.2:8080';
   //10.0.2.2
+
+  final dio = Dio(BaseOptions(baseUrl: baseUrl));
 
   //-----------------------------FetchAllSellers--------------------------------
 
@@ -21,8 +24,7 @@ class ApiServices {
       final response = await http.get(Uri.parse(url), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization':
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJNb2RlbCI6eyJ1c2VySWQiOjIwLCJmaXJzdE5hbWUiOiJOaXNzYW0iLCJsYXN0TmFtZSI6IlZBIiwiZW1haWwiOiJuaXphbXVhc2hhcmFmQGdtYWlsLmNvbSIsInBob25lIjoiKzkxODg5MzU3NDY1NyIsInN0YXR1cyI6IlBlbmRpbmcifSwiZXhwIjoxNjk5NjA3ODkxfQ.T8Sg64Nu2Qz-PUcSeqiRGI0CoKnYgCtIyv2r1sJXP4s',
+        'Authorization': 'Bearer ',
       });
       print('${response.statusCode} status');
       if (response.statusCode == 200) {

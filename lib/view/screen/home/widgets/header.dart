@@ -37,8 +37,9 @@ class HeaderSection extends StatelessWidget {
               ]),
         ),
         Container(
+          alignment: Alignment.center,
           width: width * .125,
-          height: height * .05,
+          height: height * .06,
           decoration: BoxDecoration(
             color: Colors.green,
             borderRadius: BorderRadius.circular(10),

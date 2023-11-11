@@ -29,7 +29,7 @@ class CategoriesGridview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height * .26,
+      height: height * .35,
       child: Expanded(
         child: GridView.builder(
             itemCount: 6,

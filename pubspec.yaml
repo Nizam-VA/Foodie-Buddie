@@ -40,6 +40,7 @@ dependencies:
   bloc: ^8.1.2
   http: ^1.1.0
   shared_preferences: ^2.2.2
+  dio: ^5.3.3
 
 dev_dependencies:
   flutter_test:
@@ -68,7 +69,8 @@ flutter:
     - assets/images/
     - assets/images/categories/
     - assets/images/icons/
-    # - assets/images/categories/
+    - assets/images/dishes/
+    - assets/logo/restaurants/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

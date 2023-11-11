@@ -2,12 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:foodiebuddie/core/constants.dart';
 
 class ProductListWidget extends StatelessWidget {
-  const ProductListWidget({
+  ProductListWidget({
     super.key,
     required this.height,
     required this.width,
     required this.count,
   });
+
+  final List<String> images = [
+    'assets/images/dishes/burger.jpg',
+    'assets/images/dishes/kfc.jpg'
+  ];
+  final List<String> logos = [
+    'assets/logo/restaurants/curry.png',
+    'assets/logo/restaurants/kfc.png'
+  ];
 
   final double height;
   final double width;
@@ -16,7 +25,7 @@ class ProductListWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: height * .25,
+      height: height * .275,
       child: Expanded(
         child: ListView.builder(
           itemCount: count,
@@ -32,20 +41,26 @@ class ProductListWidget extends StatelessWidget {
               child: Column(
                 children: [
                   Container(
-                    height: height * .15,
+                    height: height * .175,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: .5),
-                    ),
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: .5),
+                        image: DecorationImage(
+                            image: AssetImage(
+                                index % 2 == 0 ? images[0] : images[1]),
+                            fit: BoxFit.cover)),
                   ),
                   kHight10,
-                  const Row(
+                  Row(
                     children: [
                       CircleAvatar(
                         radius: 18,
+                        backgroundColor: Colors.white,
+                        backgroundImage:
+                            AssetImage(index % 2 == 0 ? logos[0] : logos[1]),
                       ),
                       kWidth10,
-                      Column(
+                      const Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [Text('Hotel name'), Text('Place of hotel')],
                       )

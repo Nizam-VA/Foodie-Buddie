@@ -4,6 +4,7 @@ import 'package:foodiebuddie/core/constants.dart';
 import 'package:foodiebuddie/view/screen/forgot_password/screen_forgot_password.dart';
 import 'package:foodiebuddie/view/screen/main/screen_main.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
+import 'package:foodiebuddie/view/widgets/functions/snack_bar.dart';
 import 'package:foodiebuddie/view/widgets/text_button_widget.dart';
 import 'package:foodiebuddie/view/widgets/text_field_widget.dart';
 
@@ -98,8 +99,13 @@ class ScreenLogin extends StatelessWidget {
                         final value =
                             await ApiServices().login(email, password);
                         if (value) {
+                          showSnack(
+                              context, Colors.green, 'Log in successfully');
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => ScreenMain()));
+                        } else {
+                          showSnack(
+                              context, Colors.red, 'Invalid login incredients');
                         }
                       }
                     },
