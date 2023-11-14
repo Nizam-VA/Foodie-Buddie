@@ -20,6 +20,7 @@ class TextFieldWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: userController,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       obscureText: obscureText,
       keyboardType: inputType,
       validator: validator,

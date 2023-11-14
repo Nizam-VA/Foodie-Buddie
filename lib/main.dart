@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/bottom_navigation/bottom_navigation_bloc.dart';
+import 'package:foodiebuddie/controller/blocs/login/login_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/sign_up/sign_up_bloc.dart';
 import 'package:foodiebuddie/view/screen/splash/screen_splash.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -17,12 +18,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-          create: (context) => BottomNavigationBloc(),
-        ),
-        BlocProvider(
-          create: (context) => SignUpBloc(),
-        )
+        BlocProvider(create: (context) => BottomNavigationBloc()),
+        BlocProvider(create: (context) => SignUpBloc()),
+        BlocProvider(create: (context) => LoginBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -3,8 +3,8 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/model/seller.dart';
 import 'package:foodiebuddie/model/user.dart';
+import 'package:foodiebuddie/utils/tokens.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -13,38 +13,6 @@ class ApiServices {
   //10.0.2.2
 
   final dio = Dio(BaseOptions(baseUrl: baseUrl));
-
-  //-----------------------------FetchAllSellers--------------------------------
-
-  Future<List<Seller>> fetchAllSellers() async {
-    const url = '$baseUrl/sellers';
-
-    try {
-      print('hello');
-      final response = await http.get(Uri.parse(url), headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ',
-      });
-      print('${response.statusCode} status');
-      if (response.statusCode == 200) {
-        final body = jsonDecode(response.body) as Map<String, dynamic>;
-        final result = body['sellerList'] as List;
-        final sellers = <Seller>[];
-        for (int i = 0; i < result.length; i++) {
-          final seller = Seller.fromJson(result[i]);
-          sellers.add(seller);
-          debugPrint(seller.name);
-        }
-        return sellers;
-      } else {
-        return [];
-      }
-    } catch (e) {
-      log(e.toString());
-      return [];
-    }
-  }
 
   //---------------------------------SignUp-------------------------------------
 
@@ -82,12 +50,7 @@ class ApiServices {
 
   Future<bool> otpVerification(String otp) async {
     try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      final String? bearer = prefs.getString('token');
-
-      if (bearer == null) {
-        return false;
-      }
+      final String bearer = await getToken();
 
       const String url = '$baseUrl/verifyOtp';
 
@@ -130,8 +93,9 @@ class ApiServices {
       print(response.body);
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body) as Map;
-        final sharedPreferences = await SharedPreferences.getInstance();
-        sharedPreferences.setString('token', body['token']);
+        await saveToken(body['token']);
+        // final sharedPreferences = await SharedPreferences.getInstance();
+        // sharedPreferences.setString('token', body['token']);
         return true;
       }
       return false;

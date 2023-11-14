@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/controller/api_services/api_calls.dart';
-import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/controller/api_services/sign_up_login/api_calls.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/main/screen_main.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 import 'package:foodiebuddie/view/widgets/functions/snack_bar.dart';

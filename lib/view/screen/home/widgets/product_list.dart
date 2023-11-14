@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 
 class ProductListWidget extends StatelessWidget {
   ProductListWidget({

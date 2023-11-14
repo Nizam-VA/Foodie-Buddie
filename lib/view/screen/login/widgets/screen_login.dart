@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/controller/api_services/api_calls.dart';
-import 'package:foodiebuddie/core/constants.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodiebuddie/controller/blocs/login/login_bloc.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/forgot_password/screen_forgot_password.dart';
-import 'package:foodiebuddie/view/screen/main/screen_main.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
-import 'package:foodiebuddie/view/widgets/functions/snack_bar.dart';
 import 'package:foodiebuddie/view/widgets/text_button_widget.dart';
 import 'package:foodiebuddie/view/widgets/text_field_widget.dart';
 
@@ -14,6 +13,7 @@ class ScreenLogin extends StatelessWidget {
   final formKey = GlobalKey<FormState>();
   final userController = TextEditingController();
   final passController = TextEditingController();
+  bool isError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -96,17 +96,24 @@ class ScreenLogin extends StatelessWidget {
                       if (formKey.currentState!.validate()) {
                         final email = userController.text;
                         final password = passController.text;
-                        final value =
-                            await ApiServices().login(email, password);
-                        if (value) {
-                          showSnack(
-                              context, Colors.green, 'Log in successfully');
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ScreenMain()));
-                        } else {
-                          showSnack(
-                              context, Colors.red, 'Invalid login incredients');
-                        }
+                        context.read<LoginBloc>().add(
+                              LoginEvent(
+                                email: email,
+                                password: password,
+                                context: context,
+                              ),
+                            );
+                        // final value =
+                        //     await ApiServices().login(email, password);
+                        // if (value) {
+                        //   showSnack(
+                        //       context, Colors.green, 'Log in successfully');
+                        //   Navigator.of(context).push(MaterialPageRoute(
+                        //       builder: (context) => ScreenMain()));
+                        // } else {
+                        //   showSnack(
+                        //       context, Colors.red, 'Invalid login incredients');
+                        // }
                       }
                     },
                   ),

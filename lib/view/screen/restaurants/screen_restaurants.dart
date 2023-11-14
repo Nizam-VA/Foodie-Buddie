@@ -1,15 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/controller/api_services/sellers/api_calls.dart';
+import 'package:foodiebuddie/model/seller.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/screen/profile/widgets/sub_text.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
 import 'package:foodiebuddie/view/widgets/search_text_field.dart';
 
 class ScreenRestaurants extends StatelessWidget {
-  const ScreenRestaurants({super.key});
+  ScreenRestaurants({super.key});
+
+  List<Seller> sellers = [];
+  getRestaurants() async {
+    sellers = await SellerApiServices().fetchAllSellers();
+  }
 
   @override
   Widget build(BuildContext context) {
+    getRestaurants();
+    debugPrint((sellers.length).toString());
     final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     return Scaffold(
@@ -27,7 +36,7 @@ class ScreenRestaurants extends StatelessWidget {
               kHight10,
               Expanded(
                 child: ListView.builder(
-                  itemCount: 4,
+                  itemCount: sellers.length,
                   itemBuilder: ((context, index) {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 12),
@@ -45,12 +54,12 @@ class ScreenRestaurants extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(10),
                                 border: Border.all()),
                           ),
-                          const Column(
+                          Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SectionHead(heading: 'Hotel Name'),
-                              SubText(text: 'Hotel description')
+                              SectionHead(heading: sellers[index].name),
+                              SubText(text: sellers[index].description)
                             ],
                           )
                         ],

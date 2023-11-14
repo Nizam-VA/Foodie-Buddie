@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/categories_grid.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/header.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/product_list.dart';

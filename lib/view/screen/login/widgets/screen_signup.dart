@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/controller/api_services/api_calls.dart';
-import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/controller/api_services/sign_up_login/api_calls.dart';
 import 'package:foodiebuddie/model/user.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/otp/screen_otp.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
-import 'package:foodiebuddie/view/widgets/functions/snack_bar.dart';
 import 'package:foodiebuddie/view/widgets/text_field_widget.dart';
 
 class ScreenSignUp extends StatelessWidget {
@@ -136,16 +135,12 @@ class ScreenSignUp extends StatelessWidget {
                         //     .add(SignUpEvent(user: user, context: context));
                         bool value = await ApiServices().signUp(user);
                         if (value) {
-                          showSnack(context, Colors.green,
-                              'Account created successfully');
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => ScreenOTP(),
                             ),
                           );
-                        } else {
-                          showSnack(context, Colors.red, 'Account not created');
-                        }
+                        } else {}
                       }
                     },
                   ),

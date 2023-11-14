@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foodiebuddie/core/constants.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 import 'package:foodiebuddie/view/widgets/text_field_widget.dart';
 
