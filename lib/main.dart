@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/bottom_navigation/bottom_navigation_bloc.dart';
+import 'package:foodiebuddie/controller/blocs/category/category_bloc.dart';
+import 'package:foodiebuddie/controller/blocs/dish/dish_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/login/login_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/sign_up/sign_up_bloc.dart';
 import 'package:foodiebuddie/view/screen/splash/screen_splash.dart';
@@ -20,7 +22,9 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => BottomNavigationBloc()),
         BlocProvider(create: (context) => SignUpBloc()),
-        BlocProvider(create: (context) => LoginBloc())
+        BlocProvider(create: (context) => LoginBloc()),
+        BlocProvider(create: (context) => CategoryBloc()),
+        BlocProvider(create: (context) => DishBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

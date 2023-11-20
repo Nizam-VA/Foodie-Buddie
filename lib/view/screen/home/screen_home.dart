@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodiebuddie/utils/constants.dart';
+import 'package:foodiebuddie/view/screen/all_categories/screen_all_categories.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/categories_grid.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/header.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/product_list.dart';
@@ -28,7 +29,21 @@ class ScreenHome extends StatelessWidget {
                 kHight20,
                 SearchTextField(text: 'Search restaurants...'),
                 kHight20,
-                const SectionHead(heading: 'Categories'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SectionHead(heading: 'Categories'),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => ScreenAllCategories(),
+                            ),
+                          );
+                        },
+                        child: const Text('View all'))
+                  ],
+                ),
                 kHight10,
                 CategoriesGridview(height: height, width: width),
                 kHight10,
