@@ -1,16 +1,18 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:foodiebuddie/model/category.dart';
 import 'package:foodiebuddie/utils/tokens.dart';
+import 'package:foodiebuddie/utils/urls.dart';
 import 'package:http/http.dart' as http;
 
 class CategoriesApiServices {
   static const String baseUrl = 'http://10.0.2.2:8080';
-
+  Dio dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
   Future<List<Category>> fetchAllCategories() async {
     try {
-      const url = '$baseUrl/admin/categories';
+      const url = '$baseUrl/categories';
       String token = await getToken();
       final response = await http.get(
         Uri.parse(url),
@@ -35,6 +37,16 @@ class CategoriesApiServices {
     } catch (e) {
       log(e.toString());
       return [];
+    }
+  }
+
+  Future<void> getCategoryById(int categoryId) async {
+    try {
+      final respons =
+          await dio.get('${ApiEndPoints.getCategoryById}$categoryId');
+      print(respons.data);
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

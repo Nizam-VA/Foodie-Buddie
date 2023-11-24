@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodiebuddie/view/screen/favorites/screen_favorites.dart';
 
 class HeaderSection extends StatelessWidget {
   const HeaderSection({
@@ -45,7 +46,13 @@ class HeaderSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => const ScreenFavorites(),
+                ),
+              );
+            },
             icon: const Icon(
               Icons.favorite,
               color: Colors.white,

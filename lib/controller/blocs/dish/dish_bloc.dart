@@ -12,5 +12,15 @@ class DishBloc extends Bloc<DishEvent, DishState> {
           await DishApiServices().fetchAllDishesByCategory(event.categoryId);
       emit(DishState(isLoading: false, dishes: dishes));
     });
+    on<GetDishBySeller>((event, emit) async {
+      List<Dish> dishes =
+          await DishApiServices().fetchAllDishesBySellerId(event.sellerId);
+      emit(DishState(isLoading: false, dishes: dishes));
+    });
+    on<GetDishBySellerAndCategory>((event, emit) async {
+      List<Dish> dishes = await DishApiServices()
+          .fetchAllDishesByCatAndSeller(event.sellerId, event.categoryId);
+      emit(DishState(isLoading: false, dishes: dishes));
+    });
   }
 }

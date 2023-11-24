@@ -29,7 +29,54 @@ class DishApiServices {
           final dish = Dish.fromJson(result[i] as Map<String, dynamic>);
           dishes.add(dish);
         }
-        print(dishes.length);
+        return dishes;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<Dish>> fetchAllDishesBySellerId(int sellerId) async {
+    try {
+      final response = await dio.get(
+        '${ApiEndPoints.getDishesBySeller}$sellerId',
+      );
+      if (response.statusCode == 200) {
+        final body = response.data as Map;
+        final result = body['dishList'] as List;
+        List<Dish> dishes = [];
+        for (int i = 0; i < result.length; i++) {
+          final dish = Dish.fromJson(result[i]);
+          print(dish.name);
+          dishes.add(dish);
+        }
+        return dishes;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<Dish>> fetchAllDishesByCatAndSeller(
+      int sellerId, int catId) async {
+    try {
+      final response =
+          await dio.get('/dishes?category=$catId&seller=$sellerId');
+      if (response.statusCode == 200) {
+        final body = response.data as Map;
+        final result = body['dishList'] as List;
+        List<Dish> dishes = [];
+        for (int i = 0; i < result.length; i++) {
+          final dish = Dish.fromJson(result[i]);
+          print(dish.name);
+          dishes.add(dish);
+        }
         return dishes;
       } else {
         return [];

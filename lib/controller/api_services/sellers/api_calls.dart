@@ -1,16 +1,19 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodiebuddie/model/seller.dart';
 import 'package:foodiebuddie/utils/tokens.dart';
+import 'package:foodiebuddie/utils/urls.dart';
 import 'package:http/http.dart' as http;
 
 class SellerApiServices {
+  Dio dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
   static const String baseUrl = 'http://10.0.2.2:8080';
 
   Future<List<Seller>> fetchAllSellers() async {
-    const url = '$baseUrl/sellers?p=1&l=10';
+    const url = '$baseUrl/user/sellers';
 
     String bearer = await getToken();
 
@@ -39,6 +42,30 @@ class SellerApiServices {
     } catch (e) {
       log(e.toString());
       return [];
+    }
+  }
+
+  Future<Seller?> getSellerById(int sellerId) async {
+    String bearer = await getToken();
+
+    try {
+      final response = await dio.get('${ApiEndPoints.getSellerById}$sellerId',
+          options: Options(headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $bearer',
+          }));
+      if (response.statusCode == 200) {
+        final body = response.data as Map;
+        final result = body['seller'];
+        final seller = Seller.fromJson(result);
+        return seller;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print(e.toString());
+      return null;
     }
   }
 }
