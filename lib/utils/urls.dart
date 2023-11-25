@@ -7,4 +7,8 @@ class ApiEndPoints {
   static const getAllCartItems = '/cart';
   static const getCategoryById = '/categories/';
   static const addToFavorites = '/addToFavourite/';
+  static const getAllFavorites = '/favourites';
+  static const addNewAddress = '/profile/addAddress';
+  static const updateAddress = '/profile/address/';
+  static const getAllAddresses = '/profile/address';
 }

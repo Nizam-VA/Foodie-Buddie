@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/cart/cart_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
+import 'package:foodiebuddie/view/screen/addresses/screen_addresses.dart';
 import 'package:foodiebuddie/view/screen/cart/widgets/item_row.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
@@ -60,24 +61,33 @@ class ScreenCart extends StatelessWidget {
                                               ? state.cartItems[index].name
                                               : 'Dish name',
                                         ),
-                                        InputQty(
-                                          decoration: const QtyDecorationProps(
-                                              border: InputBorder.none),
-                                          initVal: state is GetAllCartItemsState
-                                              ? state.cartItems[index].quantity
-                                              : 0,
-                                          onQtyChanged: (value) async {
-                                            // await CartApiServices()
-                                            //     .getAllCartItems();
-                                          },
-                                          qtyFormProps: const QtyFormProps(
-                                              enableTyping: false),
-                                        ),
-                                        state is GetAllCartItemsState
-                                            ? SectionHead(
-                                                heading:
-                                                    '₹ ${state.cartItems[index].price * state.cartItems[index].quantity}')
-                                            : const Text('Price')
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: [
+                                            InputQty(
+                                              decoration:
+                                                  const QtyDecorationProps(
+                                                      border: InputBorder.none),
+                                              initVal:
+                                                  state is GetAllCartItemsState
+                                                      ? state.cartItems[index]
+                                                          .quantity
+                                                      : 0,
+                                              onQtyChanged: (value) async {
+                                                // await CartApiServices()
+                                                //     .getAllCartItems();
+                                              },
+                                              qtyFormProps: const QtyFormProps(
+                                                  enableTyping: false),
+                                            ),
+                                            state is GetAllCartItemsState
+                                                ? SectionHead(
+                                                    heading:
+                                                        '₹ ${state.cartItems[index].price * state.cartItems[index].quantity}')
+                                                : const Text('Price'),
+                                          ],
+                                        )
                                       ],
                                     ),
                                   );
@@ -199,9 +209,16 @@ class ScreenCart extends StatelessWidget {
                     ),
                     kHight10,
                     ButtonWidget(
-                        width: width * 1.3,
-                        text: 'Add or select address',
-                        onPressed: () {})
+                      width: width * 1.3,
+                      text: 'Add or select address',
+                      onPressed: () async {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ScreenAddresses(),
+                          ),
+                        );
+                      },
+                    )
                   ],
                 ),
               )

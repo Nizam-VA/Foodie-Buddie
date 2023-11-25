@@ -1,21 +1,49 @@
 import 'package:dio/dio.dart';
-import 'package:foodiebuddie/model/dish.dart';
+import 'package:foodiebuddie/model/address.dart';
 import 'package:foodiebuddie/utils/tokens.dart';
 import 'package:foodiebuddie/utils/urls.dart';
 
-class FavoriteApiServices {
+class AddressApiServices {
   Dio dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
 
-  Future<bool> addToFavorites(int dishId) async {
+  Future<bool> addAddress(Address address) async {
     final token = await getToken();
+    print(address.toJson(address));
     try {
       final response = await dio.post(
-        '${ApiEndPoints.addToFavorites}$dishId',
+        ApiEndPoints.addNewAddress,
         options: Options(
           headers: {
             'Content-Type': 'application/json',
             'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
+            'Authorization': token,
+          },
+        ),
+        data: address.toJson(address),
+      );
+      print(response.statusCode);
+      print(response.data);
+      if (response.statusCode == 200) {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> updateAddress(Address address) async {
+    final token = await getToken();
+    try {
+      final response = await dio.put(
+        '${ApiEndPoints.updateAddress}${address.addressId}',
+        data: address.toJson(address),
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': token,
           },
         ),
       );
@@ -30,30 +58,11 @@ class FavoriteApiServices {
     }
   }
 
-  Future<void> deleteFromFovorites(int dishId) async {
-    final token = await getToken();
-    try {
-      final response = await dio.delete(
-        '/favourites/$dishId/delete',
-        options: Options(
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': 'Bearer $token',
-          },
-        ),
-      );
-      print(response.data);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
-  Future<List<Dish>> getAllFavorites() async {
+  Future<List<Address>> fetchAllAddresses() async {
     final token = await getToken();
     try {
       final response = await dio.get(
-        ApiEndPoints.getAllFavorites,
+        ApiEndPoints.getAllAddresses,
         options: Options(
           headers: {
             'Content-Type': 'application/json',
@@ -64,14 +73,13 @@ class FavoriteApiServices {
       );
       if (response.statusCode == 200) {
         final body = response.data as Map;
-        final result = body['result'] as List;
-        List<Dish> dishes = [];
+        final result = body['addressList'] as List;
+        List<Address> addresses = [];
         for (int i = 0; i < result.length; i++) {
-          final dish = Dish.fromJson(result[i]);
-          print(dish.name);
-          dishes.add(dish);
+          final address = Address.fromJson(result[i]);
+          addresses.add(address);
         }
-        return dishes;
+        return addresses;
       } else {
         return [];
       }

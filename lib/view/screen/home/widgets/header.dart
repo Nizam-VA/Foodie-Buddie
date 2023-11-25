@@ -46,7 +46,7 @@ class HeaderSection extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: IconButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(context).push(
                 MaterialPageRoute(
                   builder: (context) => const ScreenFavorites(),
