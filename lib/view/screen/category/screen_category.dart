@@ -4,7 +4,6 @@ import 'package:foodiebuddie/controller/api_services/sellers/api_calls.dart';
 import 'package:foodiebuddie/controller/blocs/dish/dish_bloc.dart';
 import 'package:foodiebuddie/model/category.dart';
 import 'package:foodiebuddie/model/seller.dart';
-import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/category/widgets/dish_container.dart';
 import 'package:foodiebuddie/view/screen/dish_details/screen_dish_details.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
@@ -24,17 +23,17 @@ class ScreenCategory extends StatelessWidget {
         child: AppBarWidget(title: category.name),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(24),
+        padding: const EdgeInsets.all(18),
         child: BlocBuilder<DishBloc, DishState>(
           builder: (context, state) {
             print(state.dishes.length);
             return state.dishes.isEmpty
                 ? const Center(child: Text('No dishes available'))
-                : ListView.separated(
+                : GridView.builder(
                     itemCount: state.dishes.length,
-                    separatorBuilder: (context, index) {
-                      return divider2;
-                    },
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2),
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () async {

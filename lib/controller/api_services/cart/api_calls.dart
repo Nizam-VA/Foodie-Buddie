@@ -33,6 +33,30 @@ class CartApiServices {
     }
   }
 
+  Future<bool> deleteFromCart(int dishId) async {
+    final token = await getToken();
+    try {
+      final response = await dio.delete(
+        '/cart/$dishId/deleteItem',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
   Future<List<CartItem>> getAllCartItems() async {
     try {
       final token = await getToken();

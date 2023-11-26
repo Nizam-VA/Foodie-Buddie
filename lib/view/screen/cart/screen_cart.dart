@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodiebuddie/controller/api_services/cart/api_calls.dart';
 import 'package:foodiebuddie/controller/blocs/cart/cart_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/addresses/screen_addresses.dart';
@@ -75,8 +76,12 @@ class ScreenCart extends StatelessWidget {
                                                           .quantity
                                                       : 0,
                                               onQtyChanged: (value) async {
-                                                // await CartApiServices()
-                                                //     .getAllCartItems();
+                                                state is GetAllCartItemsState
+                                                    ? await CartApiServices()
+                                                        .deleteFromCart(state
+                                                            .cartItems[index]
+                                                            .dishId)
+                                                    : null;
                                               },
                                               qtyFormProps: const QtyFormProps(
                                                   enableTyping: false),

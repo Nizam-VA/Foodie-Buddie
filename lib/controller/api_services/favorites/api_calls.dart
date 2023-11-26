@@ -30,7 +30,7 @@ class FavoriteApiServices {
     }
   }
 
-  Future<void> deleteFromFovorites(int dishId) async {
+  Future<bool> deleteFromFovorites(int dishId) async {
     final token = await getToken();
     try {
       final response = await dio.delete(
@@ -43,9 +43,14 @@ class FavoriteApiServices {
           },
         ),
       );
-      print(response.data);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
     } catch (e) {
       print(e.toString());
+      return false;
     }
   }
 
