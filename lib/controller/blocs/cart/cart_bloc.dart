@@ -14,7 +14,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     on<GetAllCartItemsEvent>((event, emit) async {
       List<CartItem> cartItems = await CartApiServices().getAllCartItems();
       final total = sum(cartItems);
-      emit(GetAllCartItemsState(cartItems: cartItems, total: total));
+      emit(GetAllCartItemsState(
+          cartItems: cartItems, total: total, discount: 0));
     });
 
     on<AddToCartEvent>((event, emit) async {
@@ -23,7 +24,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final total = sum(cartItems);
       if (value) {
         showSnack(event.context, Colors.green, 'Added to cart');
-        emit(GetAllCartItemsState(cartItems: cartItems, total: total));
+        emit(GetAllCartItemsState(
+            cartItems: cartItems, total: total, discount: 0));
       } else {
         showSnack(
             event.context, Colors.red, 'Select dish from same resturant.');
@@ -36,7 +38,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       int total = sum(cartItems);
       if (value) {
         showSnack(event.context, Colors.green, 'Decreased from cart');
-        emit(GetAllCartItemsState(cartItems: cartItems, total: total));
+        emit(GetAllCartItemsState(
+            cartItems: cartItems, total: total, discount: 0));
       } else {
         showSnack(
             event.context, Colors.red, 'Choose dish from same resturant.');
@@ -49,7 +52,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       int total = sum(cartItems);
       if (value) {
         showSnack(event.context, Colors.green, 'Decreased from cart');
-        emit(GetAllCartItemsState(cartItems: cartItems, total: total));
+        emit(GetAllCartItemsState(
+            cartItems: cartItems, total: total, discount: 0));
       } else {
         showSnack(
             event.context, Colors.red, 'Select dish from same resturant.');
@@ -61,7 +65,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final cartItems = await CartApiServices().getAllCartItems();
       int total = sum(cartItems);
       emit(GetAllCouponsState(coupons: coupons));
-      emit(GetAllCartItemsState(cartItems: cartItems, total: total));
+      emit(GetAllCartItemsState(
+          cartItems: cartItems, total: total, discount: 0));
     });
 
     on<GetAvailableCouponsEvent>((event, emit) async {
@@ -69,20 +74,19 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       final cartItems = await CartApiServices().getAllCartItems();
       int total = sum(cartItems);
       emit(GetAllCouponsState(coupons: coupons));
-      emit(GetAllCartItemsState(cartItems: cartItems, total: total));
+      emit(GetAllCartItemsState(
+          cartItems: cartItems, total: total, discount: 0));
     });
 
     on<RedeemCouponEvent>((event, emit) async {
       final coupons = await CouponApiServices().getAvailableCoupons();
       final cartItems = await CartApiServices().getAllCartItems();
       int total = sum(cartItems);
-      if (event.coupon.maximumAmtAllowed < total) {
+      if (event.coupon.minimumAmtRequired < total) {
         int discount = event.coupon.discount;
-        int actualTotal = total - discount;
-        emit(RedeemCouponState(
-            actualTotal: actualTotal, redeemAmount: discount));
         emit(GetAllCouponsState(coupons: coupons));
-        emit(GetAllCartItemsState(cartItems: cartItems, total: total));
+        emit(GetAllCartItemsState(
+            cartItems: cartItems, total: total, discount: discount));
       }
     });
   }

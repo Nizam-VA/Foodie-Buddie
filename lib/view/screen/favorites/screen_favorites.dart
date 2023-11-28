@@ -42,7 +42,8 @@ class ScreenFavorites extends StatelessWidget {
                             borderRadius: BorderRadius.circular(10),
                             border: Border.all(width: .5, color: Colors.green),
                             image: DecorationImage(
-                                image: AssetImage(state.dishes[index].imageUrl),
+                                image:
+                                    NetworkImage(state.dishes[index].imageUrl),
                                 fit: BoxFit.cover)),
                       ),
                       kHight10,
@@ -72,7 +73,7 @@ class ScreenFavorites extends StatelessWidget {
                                 radius: 18,
                                 backgroundColor:
                                     dishIds.contains(state.dishes[index].dishId)
-                                        ? Colors.green
+                                        ? Colors.red
                                         : Colors.white,
                                 child: IconButton(
                                   onPressed: () async {
@@ -87,7 +88,7 @@ class ScreenFavorites extends StatelessWidget {
                                     color: dishIds.contains(
                                             state.dishes[index].dishId)
                                         ? Colors.white
-                                        : Colors.green,
+                                        : Colors.red,
                                   ),
                                 ),
                               );

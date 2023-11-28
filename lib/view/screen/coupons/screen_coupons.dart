@@ -82,6 +82,7 @@ class ScreenCoupons extends StatelessWidget {
                                               coupon: state.coupons[index],
                                             ),
                                           );
+                                      Navigator.pop(context);
                                     },
                                     child: Container(
                                       alignment: Alignment.center,

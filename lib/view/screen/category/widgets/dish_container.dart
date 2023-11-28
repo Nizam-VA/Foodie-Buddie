@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/favorites/favorites_bloc.dart';
 import 'package:foodiebuddie/model/dish.dart';
+import 'package:foodiebuddie/utils/constants.dart';
 
 ValueNotifier<List<int>> favoriteNotifier = ValueNotifier<List<int>>([]);
 
@@ -26,10 +27,11 @@ class DishContainer extends StatelessWidget {
       // height: height * .275,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        border: Border.all(width: .5, color: Colors.green),
+        border: Border.all(width: 1, color: Colors.green),
       ),
       child: Column(
         children: [
+          kHight10,
           SizedBox(
             child: Stack(
               children: [
@@ -37,7 +39,7 @@ class DishContainer extends StatelessWidget {
                   height: height * .15,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: .5, color: Colors.green),
+                    border: Border.all(width: 1, color: Colors.green),
                     image: DecorationImage(
                       image: dish.imageUrl == ''
                           ? const AssetImage(
@@ -51,6 +53,7 @@ class DishContainer extends StatelessWidget {
               ],
             ),
           ),
+          kHight10,
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -72,7 +75,7 @@ class DishContainer extends StatelessWidget {
                   return CircleAvatar(
                     radius: 18,
                     backgroundColor: dishIds.contains(dish.dishId)
-                        ? Colors.green
+                        ? Colors.red
                         : Colors.white,
                     child: IconButton(
                       onPressed: () async {
@@ -88,7 +91,7 @@ class DishContainer extends StatelessWidget {
                         size: 22,
                         color: dishIds.contains(dish.dishId)
                             ? Colors.white
-                            : Colors.green,
+                            : Colors.red,
                       ),
                     ),
                   );

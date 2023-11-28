@@ -1,12 +1,13 @@
-import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/address/address_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/add_address/screen_add_address.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
+import 'package:foodiebuddie/view/screen/payment_method/screen_payment_method.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
+import 'package:foodiebuddie/view/widgets/dotted_button.dart';
 
 class ScreenAddresses extends StatelessWidget {
   const ScreenAddresses({super.key});
@@ -97,30 +98,25 @@ class ScreenAddresses extends StatelessWidget {
                     ),
                   );
                 },
-                child: DottedBorder(
-                  borderType: BorderType.RRect,
-                  radius: const Radius.circular(20),
-                  dashPattern: const [5, 5],
-                  color: Colors.green,
-                  strokeWidth: 1.5,
-                  child: SizedBox(
-                    width: width,
-                    height: height * .13,
-                    child: const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Icon(Icons.add, size: 30, color: Colors.red),
-                        Text('Add new address')
-                      ],
-                    ),
-                  ),
+                child: DottedButtonWidget(
+                  width: width,
+                  height: height,
+                  title: 'Add New Address',
+                  icon: Icons.add,
                 ),
               ),
               kHight30,
               ButtonWidget(
                 width: width * 1.2,
                 text: 'Confirm Location',
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ScreenPaymentMethod(),
+                    ),
+                  );
+                },
               )
             ],
           ),

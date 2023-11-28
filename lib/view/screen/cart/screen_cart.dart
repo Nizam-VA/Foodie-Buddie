@@ -232,13 +232,12 @@ class ScreenCart extends StatelessWidget {
                     kHight10,
                     divider1,
                     BlocBuilder<CartBloc, CartState>(
-                      buildWhen: (previous, current) =>
-                          current is RedeemCouponState,
+                      buildWhen: (previous, current) => current is! CartInitial,
                       builder: (context, state) {
-                        if (state is RedeemCouponState) {
+                        if (state is GetAllCartItemsState) {
                           return ItemRow(
                               keyString: 'Discount',
-                              value: '₹ ${state.redeemAmount}');
+                              value: '₹ ${state.discount}');
                         }
                         return const ItemRow(
                             keyString: 'Discount', value: '₹ 0');
@@ -248,13 +247,12 @@ class ScreenCart extends StatelessWidget {
                     divider1,
                     kHight10,
                     BlocBuilder<CartBloc, CartState>(
-                      buildWhen: (previous, current) =>
-                          current is RedeemCouponState,
+                      buildWhen: (previous, current) => current is! CartInitial,
                       builder: (context, state) {
                         return ItemRow(
                           keyString: 'Total Amount: ',
-                          value: state is RedeemCouponState
-                              ? '₹ ${state.actualTotal}'
+                          value: state is GetAllCartItemsState
+                              ? '₹ ${state.total - state.discount}'
                               : state is GetAllCartItemsState
                                   ? '₹ ${state.total}'
                                   : '₹ 0',

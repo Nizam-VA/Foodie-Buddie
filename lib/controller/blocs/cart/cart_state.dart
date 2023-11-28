@@ -8,8 +8,12 @@ final class GetAllCartItemsState extends CartState {
   final List<CartItem> cartItems;
   final int total;
   final int? tip;
+  final int discount;
   GetAllCartItemsState(
-      {required this.cartItems, required this.total, this.tip});
+      {required this.cartItems,
+      required this.total,
+      this.tip,
+      required this.discount});
 }
 
 final class GetAllCouponsState extends CartState {

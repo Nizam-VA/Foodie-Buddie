@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/bottom_navigation/bottom_navigation_bloc.dart';
 import 'package:foodiebuddie/view/screen/login/screen_login_signup.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 showDialogBox(BuildContext context) {
   showDialog(
@@ -13,13 +14,16 @@ showDialogBox(BuildContext context) {
           actions: [
             TextButton(
               child: const Text('Cancel'),
-              onPressed: () {
+              onPressed: () async {
                 Navigator.pop(context);
               },
             ),
             TextButton(
               child: const Text('Logout'),
-              onPressed: () {
+              onPressed: () async {
+                SharedPreferences preferences =
+                    await SharedPreferences.getInstance();
+                preferences.setBool('LOGIN', false);
                 context
                     .read<BottomNavigationBloc>()
                     .add(BottomNavigationEvent(index: 0));

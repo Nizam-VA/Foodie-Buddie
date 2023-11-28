@@ -13,4 +13,5 @@ class ApiEndPoints {
   static const getAllAddresses = '/profile/address';
   static const getAllCoupons = '/coupons';
   static const getAvailableCoupons = '/coupons/available';
+  static const getUserProfile = '/profile';
 }

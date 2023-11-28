@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foodiebuddie/controller/api_services/profile/api_calls.dart';
 import 'package:foodiebuddie/utils/constants.dart';
+import 'package:foodiebuddie/view/screen/addresses/screen_addresses.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/screen/profile/widgets/dialog.dart';
 import 'package:foodiebuddie/view/screen/profile/widgets/sub_text.dart';
@@ -27,7 +29,11 @@ class ScreenProfile extends StatelessWidget {
                   children: [
                     const SectionHead(heading: 'NISSAMUDEEN VA'),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () async {
+                          final user =
+                              await ProfileApiServices().getUserProfile();
+                          print(user!.firstName);
+                        },
                         child: const SectionHead(heading: 'EDIT'))
                   ],
                 ),
@@ -48,7 +54,13 @@ class ScreenProfile extends StatelessWidget {
                       children: [
                         const SectionHead(heading: 'Addresses'),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (context) => ScreenAddresses(),
+                              ),
+                            );
+                          },
                           icon: const Icon(CupertinoIcons.right_chevron),
                         )
                       ],

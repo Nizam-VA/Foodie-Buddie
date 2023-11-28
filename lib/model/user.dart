@@ -12,4 +12,14 @@ class User {
     required this.password,
     required this.rePassword,
   });
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      name: json['name'],
+      email: json['email'],
+      phone: json['phone'],
+      password: json['password'],
+      rePassword: json['rePassword'],
+    );
+  }
 }
