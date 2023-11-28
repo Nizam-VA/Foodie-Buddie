@@ -5,6 +5,7 @@ showSnack(BuildContext context, Color color, String title) {
     SnackBar(
       content: Text(title),
       backgroundColor: color,
+      duration: const Duration(seconds: 1),
     ),
   );
 }

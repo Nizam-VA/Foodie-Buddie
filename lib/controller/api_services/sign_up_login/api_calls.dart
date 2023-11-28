@@ -92,6 +92,8 @@ class ApiServices {
       print(response.statusCode);
       print(response.body);
       if (response.statusCode == 200) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setBool('LOGIN', true);
         final body = jsonDecode(response.body) as Map;
         await saveToken(body['token']);
         // final sharedPreferences = await SharedPreferences.getInstance();

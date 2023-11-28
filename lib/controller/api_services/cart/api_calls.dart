@@ -33,7 +33,32 @@ class CartApiServices {
     }
   }
 
-  Future<bool> deleteFromCart(int dishId) async {
+  Future<bool> decreaseFromCart(int dishId) async {
+    final token = await getToken();
+    try {
+      final response = await dio.patch(
+        '/cart/$dishId/decrement',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      print(response.data);
+      if (response.statusCode == 200) {
+        return true;
+      } else {
+        return false;
+      }
+    } catch (e) {
+      print(e.toString());
+      return false;
+    }
+  }
+
+  Future<bool> deleteItemFromCart(int dishId) async {
     final token = await getToken();
     try {
       final response = await dio.delete(
@@ -46,6 +71,7 @@ class CartApiServices {
           },
         ),
       );
+      print(response.data);
       if (response.statusCode == 200) {
         return true;
       } else {

@@ -1,19 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodiebuddie/controller/api_services/cart/api_calls.dart';
 import 'package:foodiebuddie/controller/blocs/cart/cart_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/addresses/screen_addresses.dart';
 import 'package:foodiebuddie/view/screen/cart/widgets/item_row.dart';
+import 'package:foodiebuddie/view/screen/coupons/screen_coupons.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 import 'package:input_quantity/input_quantity.dart';
 
 class ScreenCart extends StatelessWidget {
-  const ScreenCart({super.key});
+  ScreenCart({super.key});
 
+  final List<int> tips = [20, 30, 50];
+  int selectedTip = 0;
+  int total = 0;
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -45,7 +48,9 @@ class ScreenCart extends StatelessWidget {
                       builder: (context, state) {
                         return state is GetAllCartItemsState &&
                                 state.cartItems.isEmpty
-                            ? const Center(child: Text('Cart is empty.'))
+                            ? const Center(
+                                child: Text('Cart is empty.'),
+                              )
                             : ListView.separated(
                                 shrinkWrap: true,
                                 itemBuilder: (context, index) {
@@ -57,14 +62,26 @@ class ScreenCart extends StatelessWidget {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        SectionHead(
-                                          heading: state is GetAllCartItemsState
-                                              ? state.cartItems[index].name
-                                              : 'Dish name',
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            SectionHead(
+                                              heading: state
+                                                      is GetAllCartItemsState
+                                                  ? state.cartItems[index].name
+                                                  : 'Dish name',
+                                            ),
+                                            state is GetAllCartItemsState
+                                                ? SectionHead(
+                                                    heading:
+                                                        '₹ ${state.cartItems[index].price * state.cartItems[index].quantity}')
+                                                : const Text('Price')
+                                          ],
                                         ),
                                         Row(
                                           mainAxisAlignment:
-                                              MainAxisAlignment.start,
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             InputQty(
                                               decoration:
@@ -76,21 +93,54 @@ class ScreenCart extends StatelessWidget {
                                                           .quantity
                                                       : 0,
                                               onQtyChanged: (value) async {
-                                                state is GetAllCartItemsState
-                                                    ? await CartApiServices()
-                                                        .deleteFromCart(state
-                                                            .cartItems[index]
-                                                            .dishId)
-                                                    : null;
+                                                state is GetAllCartItemsState &&
+                                                        value >
+                                                            state
+                                                                .cartItems[
+                                                                    index]
+                                                                .quantity
+                                                    ? context
+                                                        .read<CartBloc>()
+                                                        .add(AddToCartEvent(
+                                                            dishId: state
+                                                                .cartItems[
+                                                                    index]
+                                                                .dishId,
+                                                            context: context))
+                                                    : state is GetAllCartItemsState &&
+                                                            value <
+                                                                state
+                                                                    .cartItems[
+                                                                        index]
+                                                                    .quantity
+                                                        ? context
+                                                            .read<CartBloc>()
+                                                            .add(DecreaseCartEvent(
+                                                                dishId: state
+                                                                    .cartItems[
+                                                                        index]
+                                                                    .dishId,
+                                                                context:
+                                                                    context))
+                                                        : null;
                                               },
                                               qtyFormProps: const QtyFormProps(
                                                   enableTyping: false),
                                             ),
-                                            state is GetAllCartItemsState
-                                                ? SectionHead(
-                                                    heading:
-                                                        '₹ ${state.cartItems[index].price * state.cartItems[index].quantity}')
-                                                : const Text('Price'),
+                                            IconButton(
+                                                onPressed: () async {
+                                                  state is GetAllCartItemsState
+                                                      ? context.read<CartBloc>().add(
+                                                          DeleteItemFromCartEvent(
+                                                              dishId: state
+                                                                  .cartItems[
+                                                                      index]
+                                                                  .dishId,
+                                                              context: context))
+                                                      : null;
+                                                },
+                                                icon: const Icon(Icons.delete,
+                                                    color: Colors.red))
                                           ],
                                         )
                                       ],
@@ -121,7 +171,7 @@ class ScreenCart extends StatelessWidget {
                 ),
               ),
               kHight20,
-              const SectionHead(heading: 'Tip your delivery partner'),
+              const SectionHead(heading: 'Apply Coupon'),
               kHight10,
               Container(
                 width: width,
@@ -132,29 +182,25 @@ class ScreenCart extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'Thank your delivery partner by leaving the a tip.',
+                      'Earn cashback on your order.',
                       style: TextStyle(
                         fontSize: 18,
                       ),
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const SectionHead(heading: '₹ 20'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const SectionHead(heading: '₹ 30'),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {},
-                          child: const SectionHead(heading: '₹ 50'),
-                        ),
-                      ],
+                    const SizedBox(height: 12),
+                    ButtonWidget(
+                      width: width * 1.5,
+                      text: 'Apply Coupon',
+                      onPressed: () async {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (context) => ScreenCoupons(),
+                          ),
+                        );
+                      },
                     )
                   ],
                 ),
@@ -164,27 +210,57 @@ class ScreenCart extends StatelessWidget {
               kHight10,
               Container(
                 width: width,
-                height: height * .4,
                 padding: const EdgeInsets.all(24),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child: const Column(
+                child: Column(
                   children: [
-                    ItemRow(keyString: 'Item Total: ', value: '₹ 234.7'),
+                    BlocBuilder<CartBloc, CartState>(
+                      builder: (context, state) {
+                        return ItemRow(
+                          keyString: 'Item Total: ',
+                          value: state is GetAllCartItemsState
+                              ? '₹ ${state.total}'
+                              : '₹ 0',
+                        );
+                      },
+                    ),
                     kHight10,
-                    ItemRow(keyString: 'Delivery fee', value: 'free'),
+                    const ItemRow(keyString: 'Delivery fee', value: 'free'),
+                    kHight10,
+                    divider1,
+                    BlocBuilder<CartBloc, CartState>(
+                      buildWhen: (previous, current) =>
+                          current is RedeemCouponState,
+                      builder: (context, state) {
+                        if (state is RedeemCouponState) {
+                          return ItemRow(
+                              keyString: 'Discount',
+                              value: '₹ ${state.redeemAmount}');
+                        }
+                        return const ItemRow(
+                            keyString: 'Discount', value: '₹ 0');
+                      },
+                    ),
                     kHight10,
                     divider1,
                     kHight10,
-                    ItemRow(keyString: 'Delivery Tip:', value: '₹0'),
-                    kHight10,
-                    ItemRow(keyString: 'GST and Charges', value: '₹22'),
-                    kHight10,
-                    divider1,
-                    kHight10,
-                    ItemRow(keyString: 'To Pay', value: '₹256.7')
+                    BlocBuilder<CartBloc, CartState>(
+                      buildWhen: (previous, current) =>
+                          current is RedeemCouponState,
+                      builder: (context, state) {
+                        return ItemRow(
+                          keyString: 'Total Amount: ',
+                          value: state is RedeemCouponState
+                              ? '₹ ${state.actualTotal}'
+                              : state is GetAllCartItemsState
+                                  ? '₹ ${state.total}'
+                                  : '₹ 0',
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),

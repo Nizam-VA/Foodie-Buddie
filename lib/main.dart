@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => CartBloc()),
         BlocProvider(create: (context) => RestaurantBloc()),
         BlocProvider(create: (context) => AddressBloc()),
-        BlocProvider(create: (context) => FavoritesBloc())
+        BlocProvider(create: (context) => FavoritesBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
