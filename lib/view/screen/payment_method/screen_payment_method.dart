@@ -1,5 +1,8 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodiebuddie/controller/blocs/cart/cart_bloc.dart';
+import 'package:foodiebuddie/controller/blocs/payment/payment_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/utils/text_styles.dart';
 import 'package:foodiebuddie/view/screen/cart/widgets/item_row.dart';
@@ -9,13 +12,12 @@ import 'package:foodiebuddie/view/widgets/button_widget.dart';
 
 class ScreenPaymentMethod extends StatelessWidget {
   ScreenPaymentMethod({super.key});
-
-  String selectedOption = '';
+  String couponCode = '';
   List<String> values = ['COD', 'ONLINE'];
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    final height = MediaQuery.of(context).size.height;
+    // final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: const PreferredSize(
         preferredSize: Size.fromHeight(56),
@@ -28,26 +30,48 @@ class ScreenPaymentMethod extends StatelessWidget {
           children: [
             const SectionHead(heading: 'Payment Details'),
             kHight10,
-            Container(
-              width: width,
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                border: Border.all(color: Colors.green),
-              ),
-              child: Column(
-                children: [
-                  ItemRow(keyString: 'Item Total', value: '₹ 250'),
-                  kHight10,
-                  ItemRow(keyString: 'Delivery Charge', value: 'Free'),
-                  kHight10,
-                  divider2,
-                  ItemRow(keyString: 'Discount', value: '₹ 50'),
-                  kHight10,
-                  divider2,
-                  ItemRow(keyString: 'Total Amount', value: '₹ 200'),
-                ],
-              ),
+            BlocBuilder<CartBloc, CartState>(
+              builder: (context, state) {
+                if (state is! CartInitial) {
+                  return Container(
+                    width: width,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      border: Border.all(color: Colors.green),
+                    ),
+                    child: Column(
+                      children: [
+                        ItemRow(
+                            keyString: 'Item Total',
+                            value: state is GetAllCartItemsState
+                                ? '₹ ${state.total}'
+                                : '₹ 0'),
+                        kHight10,
+                        const ItemRow(
+                            keyString: 'Delivery Charge', value: 'Free'),
+                        kHight10,
+                        divider2,
+                        ItemRow(
+                            keyString: 'Discount',
+                            value: state is GetAllCartItemsState
+                                ? '₹ ${state.discount}'
+                                : '₹ 0'),
+                        kHight10,
+                        divider2,
+                        ItemRow(
+                          keyString: 'Total Amount',
+                          value: state is GetAllCartItemsState
+                              ? '₹ ${state.total - state.discount}'
+                              : '₹ 200',
+                        ),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const Center(child: Text('No data '));
+                }
+              },
             ),
             kHight20,
             const Text(
@@ -71,11 +95,17 @@ class ScreenPaymentMethod extends StatelessWidget {
                         index == 0 ? 'Cash On Delivery' : 'Online Payment',
                         style: boldBlack,
                       ),
-                      trailing: Radio(
-                        value: values[index],
-                        groupValue: selectedOption,
-                        onChanged: (value) {
-                          selectedOption = value!;
+                      trailing: BlocBuilder<PaymentBloc, PaymentState>(
+                        builder: (context, state) {
+                          return Radio(
+                            value: values[index],
+                            groupValue: state.method,
+                            activeColor: Colors.green,
+                            onChanged: (value) {
+                              context.read<PaymentBloc>().add(
+                                  PaymentMethodEvent(method: values[index]));
+                            },
+                          );
                         },
                       ),
                     ),
@@ -84,10 +114,16 @@ class ScreenPaymentMethod extends StatelessWidget {
               }),
             ),
             kHight20,
-            ButtonWidget(
-              width: width,
-              text: 'Proceed to pay',
-              onPressed: () {},
+            BlocBuilder<PaymentBloc, PaymentState>(
+              builder: (context, state) {
+                return ButtonWidget(
+                  width: width,
+                  text: 'Proceed to pay',
+                  onPressed: () {
+                    print(state.method);
+                  },
+                );
+              },
             ),
           ],
         ),

@@ -23,3 +23,11 @@ const boldBlack =
     TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.black);
 const boldGrey =
     TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: Colors.grey);
+
+//big and bold
+const bigBoldGreen =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.green);
+const bigBoldBlack =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.black);
+const bigBoldGrey =
+    TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.grey);

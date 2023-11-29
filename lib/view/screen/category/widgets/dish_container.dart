@@ -22,7 +22,7 @@ class DishContainer extends StatelessWidget {
     context.read<FavoritesBloc>().add(GetAllFavoritesEvent());
     return Container(
       margin: const EdgeInsets.all(4),
-      padding: const EdgeInsets.all(4),
+      padding: const EdgeInsets.all(6),
       width: width - (width * .8),
       // height: height * .275,
       decoration: BoxDecoration(
@@ -31,27 +31,23 @@ class DishContainer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          kHight10,
-          SizedBox(
-            child: Stack(
-              children: [
-                Container(
-                  height: height * .15,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(width: 1, color: Colors.green),
-                    image: DecorationImage(
-                      image: dish.imageUrl == ''
-                          ? const AssetImage(
-                                  'assets/images/categories/dish.jpg')
-                              as ImageProvider
-                          : NetworkImage(dish.imageUrl),
-                      fit: BoxFit.fill,
-                    ),
+          Stack(
+            children: [
+              Container(
+                height: height * .15,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(width: 1, color: Colors.green),
+                  image: DecorationImage(
+                    image: dish.imageUrl == ''
+                        ? const AssetImage('assets/images/categories/dish.jpg')
+                            as ImageProvider
+                        : NetworkImage(dish.imageUrl),
+                    fit: BoxFit.fill,
                   ),
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           kHight10,
           Row(

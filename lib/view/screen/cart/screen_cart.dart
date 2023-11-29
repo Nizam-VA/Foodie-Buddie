@@ -17,6 +17,7 @@ class ScreenCart extends StatelessWidget {
   final List<int> tips = [20, 30, 50];
   int selectedTip = 0;
   int total = 0;
+  String couponCode = '';
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
