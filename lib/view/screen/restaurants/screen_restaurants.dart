@@ -41,7 +41,8 @@ class ScreenRestaurants extends StatelessWidget {
                             Navigator.of(context).push(
                               MaterialPageRoute(
                                 builder: (context) => ScreenRestaurantDishes(
-                                    seller: state.restaurants[index]),
+                                  seller: state.restaurants[index],
+                                ),
                               ),
                             );
                           },
@@ -59,8 +60,9 @@ class ScreenRestaurants extends StatelessWidget {
                                   height: height * .15,
                                   width: width * .225,
                                   decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      border: Border.all()),
+                                    borderRadius: BorderRadius.circular(10),
+                                    border: Border.all(),
+                                  ),
                                 ),
                                 Column(
                                   mainAxisAlignment: MainAxisAlignment.center,

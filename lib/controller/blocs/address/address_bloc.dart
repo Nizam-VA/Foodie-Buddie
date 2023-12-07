@@ -35,5 +35,9 @@ class AddressBloc extends Bloc<AddressEvent, AddressState> {
       final addresses = await AddressApiServices().fetchAllAddresses();
       emit(AddressState(addresses: addresses));
     });
+    on<SelectAddressEvent>((event, emit) async {
+      final addresses = await AddressApiServices().fetchAllAddresses();
+      emit(AddressState(addresses: addresses, index: event.index));
+    });
   }
 }

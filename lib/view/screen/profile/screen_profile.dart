@@ -5,6 +5,7 @@ import 'package:foodiebuddie/controller/blocs/profile/profile_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/view/screen/addresses/screen_addresses.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
+import 'package:foodiebuddie/view/screen/orders/screen_orders.dart';
 import 'package:foodiebuddie/view/screen/profile/widgets/dialog.dart';
 import 'package:foodiebuddie/view/screen/profile/widgets/sub_text.dart';
 import 'package:foodiebuddie/view/screen/update_profile/screen_update_profiile.dart';
@@ -32,7 +33,8 @@ class ScreenProfile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SectionHead(heading: state.profile!.firstName),
+                        SectionHead(
+                            heading: state.profile?.firstName ?? 'First name'),
                         TextButton(
                             onPressed: () async {
                               Navigator.of(context).push(
@@ -48,8 +50,8 @@ class ScreenProfile extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SubText(text: state.profile!.phone),
-                        SubText(text: state.profile!.email)
+                        SubText(text: state.profile?.phone ?? 'Mobile Number'),
+                        SubText(text: state.profile?.email ?? 'Email id')
                       ],
                     ),
                     kHight10,
@@ -81,7 +83,14 @@ class ScreenProfile extends StatelessWidget {
                           children: [
                             const SectionHead(heading: 'Orders'),
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () async {
+                                // await OrdersApiServices().getAllOrders();
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (context) => const ScreenOrders(),
+                                  ),
+                                );
+                              },
                               icon: const Icon(CupertinoIcons.right_chevron),
                             ),
                           ],

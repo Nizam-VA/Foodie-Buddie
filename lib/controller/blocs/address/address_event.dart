@@ -15,3 +15,8 @@ final class UpdateAddressEvent extends AddressEvent {
 }
 
 final class GetAllAddressEvent extends AddressEvent {}
+
+final class SelectAddressEvent extends AddressEvent {
+  final int index;
+  SelectAddressEvent({required this.index});
+}

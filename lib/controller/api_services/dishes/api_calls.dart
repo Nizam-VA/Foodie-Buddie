@@ -50,7 +50,7 @@ class DishApiServices {
         List<Dish> dishes = [];
         for (int i = 0; i < result.length; i++) {
           final dish = Dish.fromJson(result[i]);
-          print(dish.name);
+          // print(dish.name);
           dishes.add(dish);
         }
         return dishes;
@@ -68,6 +68,29 @@ class DishApiServices {
     try {
       final response =
           await dio.get('/dishes?category=$catId&seller=$sellerId');
+      if (response.statusCode == 200) {
+        final body = response.data as Map;
+        final result = body['dishList'] as List;
+        List<Dish> dishes = [];
+        for (int i = 0; i < result.length; i++) {
+          final dish = Dish.fromJson(result[i]);
+          // print(dish.name);
+          dishes.add(dish);
+        }
+        return dishes;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<Dish>> searchDishes(String query) async {
+    try {
+      final token = await getToken();
+      final response = await dio.get(ApiEndPoints.searchDish + query);
       if (response.statusCode == 200) {
         final body = response.data as Map;
         final result = body['dishList'] as List;

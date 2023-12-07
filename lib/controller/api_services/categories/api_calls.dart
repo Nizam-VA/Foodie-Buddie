@@ -8,7 +8,7 @@ import 'package:foodiebuddie/utils/urls.dart';
 import 'package:http/http.dart' as http;
 
 class CategoriesApiServices {
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = ApiEndPoints.baseUrl;
   Dio dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
   Future<List<Category>> fetchAllCategories() async {
     try {

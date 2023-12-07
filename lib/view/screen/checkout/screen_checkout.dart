@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/cart/cart_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/payment/payment_bloc.dart';
+import 'package:foodiebuddie/model/checkout.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/utils/text_styles.dart';
 import 'package:foodiebuddie/view/screen/cart/widgets/item_row.dart';
@@ -10,10 +11,21 @@ import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 
-class ScreenPaymentMethod extends StatelessWidget {
-  ScreenPaymentMethod({super.key});
-  String couponCode = '';
+class ScreenCheckout extends StatefulWidget {
+  ScreenCheckout(
+      {super.key, required this.couponCode, required this.addressId});
+  final String couponCode;
+  final int addressId;
+
+  @override
+  State<ScreenCheckout> createState() => _ScreenCheckoutState();
+}
+
+class _ScreenCheckoutState extends State<ScreenCheckout> {
+  int total = 0;
+
   List<String> values = ['COD', 'ONLINE'];
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -33,6 +45,9 @@ class ScreenPaymentMethod extends StatelessWidget {
             BlocBuilder<CartBloc, CartState>(
               builder: (context, state) {
                 if (state is! CartInitial) {
+                  state is GetAllCartItemsState
+                      ? total = state.total - state.discount
+                      : 0;
                   return Container(
                     width: width,
                     padding: const EdgeInsets.all(12),
@@ -118,9 +133,30 @@ class ScreenPaymentMethod extends StatelessWidget {
               builder: (context, state) {
                 return ButtonWidget(
                   width: width,
-                  text: 'Proceed to pay',
-                  onPressed: () {
-                    print(state.method);
+                  text: state.method == 'COD' ? 'Checkout' : 'Proceed to pay',
+                  onPressed: () async {
+                    if (state.method == 'COD') {
+                      final checkOut = CheckOut(
+                        addressId: widget.addressId.toString(),
+                        couponCode: widget.couponCode,
+                        paymentMethod: state.method,
+                      );
+                      context.read<CartBloc>().add(
+                          CheckoutEvent(checkOut: checkOut, context: context));
+                    } else if (state.method == 'ONLINE') {
+                      final checkOut = CheckOut(
+                        addressId: widget.addressId.toString(),
+                        couponCode: widget.couponCode,
+                        paymentMethod: state.method,
+                      );
+                      context.read<CartBloc>().add(
+                          CheckoutEvent(checkOut: checkOut, context: context));
+                      // Navigator.of(context).push(
+                      //   MaterialPageRoute(
+                      //     builder: (context) => const ScreenPayment(response: ),
+                      //   ),
+                      // );
+                    }
                   },
                 );
               },

@@ -5,11 +5,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:foodiebuddie/model/user.dart';
 import 'package:foodiebuddie/utils/tokens.dart';
+import 'package:foodiebuddie/utils/urls.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiServices {
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = ApiEndPoints.baseUrl;
   //10.0.2.2
 
   final dio = Dio(BaseOptions(baseUrl: baseUrl));

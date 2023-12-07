@@ -7,21 +7,17 @@ class ProductListWidget extends StatelessWidget {
     required this.height,
     required this.width,
     required this.count,
+    required this.image,
+    required this.offerName,
+    required this.endDate,
   });
 
-  final List<String> images = [
-    'assets/images/dishes/burger.jpg',
-    'assets/images/dishes/kfc.jpg'
-  ];
-  final List<String> logos = [
-    'assets/logo/restaurants/curry.png',
-    'assets/logo/restaurants/kfc.png'
-  ];
-
+  final String image;
   final double height;
   final double width;
   final int count;
-
+  final String offerName;
+  final String endDate;
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -46,23 +42,24 @@ class ProductListWidget extends StatelessWidget {
                         borderRadius: BorderRadius.circular(10),
                         border: Border.all(width: .5),
                         image: DecorationImage(
-                            image: AssetImage(
-                                index % 2 == 0 ? images[0] : images[1]),
-                            fit: BoxFit.cover)),
+                            image: NetworkImage(image), fit: BoxFit.cover)),
                   ),
                   kHight10,
                   Row(
                     children: [
-                      CircleAvatar(
-                        radius: 18,
-                        backgroundColor: Colors.white,
-                        backgroundImage:
-                            AssetImage(index % 2 == 0 ? logos[0] : logos[1]),
-                      ),
+                      // CircleAvatar(
+                      //   radius: 18,
+                      //   backgroundColor: Colors.white,
+                      //   backgroundImage:
+                      //       AssetImage(index % 2 == 0 ? logos[0] : logos[1]),
+                      // ),
                       kWidth10,
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [Text('Hotel name'), Text('Place of hotel')],
+                        children: [
+                          Text(offerName),
+                          Text('ends with: $endDate')
+                        ],
                       )
                     ],
                   )

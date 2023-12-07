@@ -18,3 +18,8 @@ final class GetDishBySellerAndCategory extends DishEvent {
   GetDishBySellerAndCategory(
       {required this.sellerId, required this.categoryId});
 }
+
+final class SearchDishEvent extends DishEvent {
+  final String query;
+  SearchDishEvent({required this.query});
+}

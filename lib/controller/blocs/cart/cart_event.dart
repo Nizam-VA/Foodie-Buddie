@@ -35,3 +35,9 @@ class RedeemCouponEvent extends CartEvent {
   final Coupon coupon;
   RedeemCouponEvent({required this.coupon});
 }
+
+class CheckoutEvent extends CartEvent {
+  final CheckOut checkOut;
+  final BuildContext context;
+  CheckoutEvent({required this.checkOut, required this.context});
+}

@@ -10,7 +10,7 @@ import 'package:http/http.dart' as http;
 
 class SellerApiServices {
   Dio dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
-  static const String baseUrl = 'http://10.0.2.2:8080';
+  static const String baseUrl = ApiEndPoints.baseUrl;
 
   Future<List<Seller>> fetchAllSellers() async {
     const url = '$baseUrl/user/sellers';
@@ -41,6 +41,27 @@ class SellerApiServices {
       }
     } catch (e) {
       log(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<Seller>> searchSellers(String query) async {
+    try {
+      final response = await dio.get(ApiEndPoints.searchSeller + query);
+      if (response.statusCode == 200) {
+        final body = response.data as Map;
+        final result = body['sellerList'] as List;
+        final sellers = <Seller>[];
+        for (int i = 0; i < result.length; i++) {
+          final seller = Seller.fromJson(result[i]);
+          sellers.add(seller);
+        }
+        return sellers;
+      } else {
+        return [];
+      }
+    } catch (e) {
+      print(e.toString());
       return [];
     }
   }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foodiebuddie/controller/blocs/category/category_bloc.dart';
+import 'package:foodiebuddie/view/screen/category/screen_category.dart';
 
 class CategoriesGridview extends StatelessWidget {
   CategoriesGridview({
@@ -30,7 +31,15 @@ class CategoriesGridview extends StatelessWidget {
                     crossAxisCount: 3),
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) =>
+                              ScreenCategory(category: state.categories[index]),
+                        ),
+                      );
+                    },
                     child: Container(
                       alignment: Alignment.center,
                       margin: const EdgeInsets.symmetric(

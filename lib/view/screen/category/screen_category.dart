@@ -26,7 +26,9 @@ class ScreenCategory extends StatelessWidget {
         padding: const EdgeInsets.all(18),
         child: BlocBuilder<DishBloc, DishState>(
           builder: (context, state) {
-            print(state.dishes.length);
+            if (state.isLoading) {
+              return Center(child: CircularProgressIndicator());
+            }
             return state.dishes.isEmpty
                 ? const Center(child: Text('No dishes available'))
                 : GridView.builder(

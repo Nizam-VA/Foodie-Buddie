@@ -11,5 +11,11 @@ class RestaurantBloc extends Bloc<RestaurantEvent, RestaurantState> {
       List<Seller> restaurants = await SellerApiServices().fetchAllSellers();
       emit(RestaurantState(restaurants: restaurants));
     });
+
+    on<SearchRestaurantEvent>((event, emit) async {
+      List<Seller> restaurants =
+          await SellerApiServices().searchSellers(event.query);
+      emit(RestaurantState(restaurants: restaurants));
+    });
   }
 }
