@@ -1,11 +1,11 @@
 class CheckoutResponse {
-  final int deliveryCharge;
+  final num deliveryCharge;
   final String email;
   final String firstName;
   final String key;
   final String orderId;
   final String phone;
-  final int totalPrice;
+  final num totalPrice;
 
   CheckoutResponse({
     required this.deliveryCharge,

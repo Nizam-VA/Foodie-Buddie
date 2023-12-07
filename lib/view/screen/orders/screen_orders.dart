@@ -39,15 +39,12 @@ class ScreenOrders extends StatelessWidget {
         body: TabBarView(children: [
           BlocBuilder<OrderBloc, OrderState>(
             builder: (context, state) {
-              print(state.orders.length);
               return AllOrders(
                 count: state.orders.length,
-                orderId: state.orders.map((e) => e.transactionId).toList(),
+                orderId: state.orders.map((e) => e.orderId.toString()).toList(),
                 itemCount:
                     state.orders.map((e) => e.itemCount.toString()).toList(),
-                orderDate: state.orders
-                    .map((e) => e.orderDate.substring(0, 10))
-                    .toList(),
+                orderDate: state.orders.map((e) => e.orderDate).toList(),
                 price:
                     state.orders.map((e) => e.totalPrice.toString()).toList(),
                 orderStatus: state.orders.map((e) => e.orderStatus).toList(),

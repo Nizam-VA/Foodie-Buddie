@@ -25,8 +25,10 @@ class ScreenFavorites extends StatelessWidget {
         child: BlocBuilder<FavoritesBloc, FavoritesState>(
           builder: (context, state) {
             return GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                childAspectRatio: width / height / .5,
+              ),
               itemBuilder: (context, index) {
                 final dishIds =
                     state.dishes.map((dish) => dish.dishId).toList();
@@ -53,7 +55,7 @@ class ScreenFavorites extends StatelessWidget {
                     child: Column(
                       children: [
                         Container(
-                          height: height * .175,
+                          height: height * .14,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
                               border:

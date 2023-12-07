@@ -47,7 +47,7 @@ class ScreenHome extends StatelessWidget {
                         child: const Text('View all'))
                   ],
                 ),
-                kHight10,
+                // kHight10,
                 CategoriesGridview(height: height, width: width),
                 kHight10,
                 const Divider(thickness: 2),
@@ -68,7 +68,7 @@ class ScreenHome extends StatelessWidget {
                             height: height,
                             width: width,
                             count: state.offers.length,
-                            image: '',
+                            image: state.offers[0].image,
                             offerName: state.offers[0].offerTitle,
                             endDate: state.offers[0].endDate.substring(0, 10),
                           );

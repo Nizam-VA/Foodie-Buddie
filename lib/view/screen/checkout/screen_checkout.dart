@@ -117,8 +117,9 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                             groupValue: state.method,
                             activeColor: Colors.green,
                             onChanged: (value) {
-                              context.read<PaymentBloc>().add(
-                                  PaymentMethodEvent(method: values[index]));
+                              context
+                                  .read<PaymentBloc>()
+                                  .add(PaymentMethodEvent(method: value!));
                             },
                           );
                         },
@@ -135,6 +136,7 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                   width: width,
                   text: state.method == 'COD' ? 'Checkout' : 'Proceed to pay',
                   onPressed: () async {
+                    print(state.method);
                     if (state.method == 'COD') {
                       final checkOut = CheckOut(
                         addressId: widget.addressId.toString(),

@@ -2,8 +2,7 @@ class ApiEndPoints {
   //IPAddress = 192.168.146.26
   //Local host = 10.0.2.2
   //http://ec2-16-170-237-67.eu-north-1.compute.amazonaws.com
-  static const String baseUrl =
-      'http://ec2-16-170-237-67.eu-north-1.compute.amazonaws.com';
+  static const String baseUrl = 'http://10.0.2.2:8080';
   static const getDishesByCategory = '/dishes?l=10&category=';
   static const getDishesBySeller = '/dishes?seller=';
   static const searchDish = '/search/dishes?q=';

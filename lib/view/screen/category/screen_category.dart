@@ -30,12 +30,16 @@ class ScreenCategory extends StatelessWidget {
               return Center(child: CircularProgressIndicator());
             }
             return state.dishes.isEmpty
-                ? const Center(child: Text('No dishes available'))
+                ? Center(
+                    child: Image.asset(
+                    'assets/images/icons/empty-folder.png',
+                    width: width * .3,
+                  ))
                 : GridView.builder(
                     itemCount: state.dishes.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 2,
+                        childAspectRatio: width / height / .53),
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () async {
