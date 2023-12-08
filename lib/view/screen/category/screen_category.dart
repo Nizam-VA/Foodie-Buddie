@@ -32,8 +32,8 @@ class ScreenCategory extends StatelessWidget {
             return state.dishes.isEmpty
                 ? Center(
                     child: Image.asset(
-                    'assets/images/icons/empty-folder.png',
-                    width: width * .3,
+                    'assets/images/icons/empty.gif',
+                    width: width * .5,
                   ))
                 : GridView.builder(
                     itemCount: state.dishes.length,

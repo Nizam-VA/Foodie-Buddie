@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodiebuddie/model/order.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/utils/text_styles.dart';
 import 'package:foodiebuddie/view/screen/cart/widgets/item_row.dart';
@@ -6,15 +7,18 @@ import 'package:foodiebuddie/view/screen/order_details/screen_order_details.dart
 import 'package:intl/intl.dart';
 
 class AllOrders extends StatelessWidget {
-  const AllOrders(
-      {super.key,
-      required this.count,
-      required this.orderId,
-      required this.itemCount,
-      required this.orderDate,
-      required this.price,
-      required this.orderStatus});
+  const AllOrders({
+    super.key,
+    required this.count,
+    required this.orderId,
+    required this.itemCount,
+    required this.orderDate,
+    required this.price,
+    required this.orderStatus,
+    required this.order,
+  });
   final int count;
+  final List<Order> order;
   final List<String> orderId;
   final List<String> itemCount;
   final List<String> orderDate;
@@ -27,13 +31,13 @@ class AllOrders extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(24),
       child: ListView.builder(
-        itemCount: count,
+        itemCount: order.length,
         itemBuilder: (context, index) {
           return InkWell(
             onTap: () {
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ScreenOrderDetails(),
+                  builder: (context) => ScreenOrderDetails(order: order[index]),
                 ),
               );
             },

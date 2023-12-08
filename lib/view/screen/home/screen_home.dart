@@ -67,10 +67,7 @@ class ScreenHome extends StatelessWidget {
                         : ProductListWidget(
                             height: height,
                             width: width,
-                            count: state.offers.length,
-                            image: state.offers[0].image,
-                            offerName: state.offers[0].offerTitle,
-                            endDate: state.offers[0].endDate.substring(0, 10),
+                            offers: state.offers,
                           );
                   },
                 ),

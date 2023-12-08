@@ -33,17 +33,17 @@ class ScreenCart extends StatelessWidget {
         preferredSize: Size.fromHeight(56),
         child: AppBarWidget(title: 'Cart'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(24),
-          child: BlocBuilder<CartBloc, CartState>(
-            builder: (context, state) {
-              return state is GetAllCartItemsState
-                  ? state.cartItems.isEmpty
-                      ? const Center(
-                          child: Text('No cart items'),
-                        )
-                      : Column(
+      body: BlocBuilder<CartBloc, CartState>(
+        builder: (context, state) {
+          return state is GetAllCartItemsState
+              ? state.cartItems.isEmpty
+                  ? Center(
+                      child: Image.asset('assets/images/icons/empty-cart.gif'),
+                    )
+                  : SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(24),
+                        child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
@@ -377,11 +377,11 @@ class ScreenCart extends StatelessWidget {
                               ),
                             )
                           ],
-                        )
-                  : kHight10;
-            },
-          ),
-        ),
+                        ),
+                      ),
+                    )
+              : kHight10;
+        },
       ),
     );
   }

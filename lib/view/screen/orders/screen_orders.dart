@@ -40,6 +40,7 @@ class ScreenOrders extends StatelessWidget {
           BlocBuilder<OrderBloc, OrderState>(
             builder: (context, state) {
               return AllOrders(
+                order: state.orders,
                 count: state.orders.length,
                 orderId: state.orders.map((e) => e.orderId.toString()).toList(),
                 itemCount:
@@ -58,6 +59,7 @@ class ScreenOrders extends StatelessWidget {
                   .toList();
               print(orders.length);
               return AllOrders(
+                order: orders,
                 count: orders.length,
                 orderId:
                     orders.map((e) => e.transactionId.substring(24)).toList(),
@@ -76,6 +78,7 @@ class ScreenOrders extends StatelessWidget {
                   .toList();
               print(orders.length);
               return AllOrders(
+                order: orders,
                 count: orders.length,
                 orderId:
                     orders.map((e) => e.transactionId.substring(24)).toList(),

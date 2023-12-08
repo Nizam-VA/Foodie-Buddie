@@ -1,66 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodiebuddie/controller/blocs/restaurant/restaurant_bloc.dart';
+import 'package:foodiebuddie/model/offer.dart';
 import 'package:foodiebuddie/utils/constants.dart';
+import 'package:foodiebuddie/utils/text_styles.dart';
+import 'package:foodiebuddie/view/screen/offer_details/screen_offer_details.dart';
+import 'package:intl/intl.dart';
 
 class ProductListWidget extends StatelessWidget {
   ProductListWidget({
     super.key,
     required this.height,
     required this.width,
-    required this.count,
-    required this.image,
-    required this.offerName,
-    required this.endDate,
+    required this.offers,
   });
 
-  final String image;
   final double height;
   final double width;
-  final int count;
-  final String offerName;
-  final String endDate;
+  final List<Offer> offers;
   @override
   Widget build(BuildContext context) {
+    context.read<RestaurantBloc>().add(RestaurantEvent());
+
     return SizedBox(
       height: height * .275,
       child: ListView.builder(
         shrinkWrap: true,
-        itemCount: count,
+        itemCount: offers.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
-          return Container(
-            margin: const EdgeInsets.only(right: 12, top: 8),
-            width: width - (width * .4),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(width: .5),
-            ),
-            child: Column(
-              children: [
-                Container(
-                  height: height * .175,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: .5),
-                      image: DecorationImage(
-                          image: NetworkImage(image), fit: BoxFit.cover)),
+          return InkWell(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ScreenOfferDetails(
+                    sellerId: offers[index].sellerId,
+                    catId: offers[index].categoryId,
+                    offer: offers[index].offerTitle,
+                  ),
                 ),
-                kHight10,
-                Row(
-                  children: [
-                    // CircleAvatar(
-                    //   radius: 18,
-                    //   backgroundColor: Colors.white,
-                    //   backgroundImage:
-                    //       AssetImage(index % 2 == 0 ? logos[0] : logos[1]),
-                    // ),
-                    kWidth10,
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [Text(offerName), Text('ends with: $endDate')],
-                    )
-                  ],
-                )
-              ],
+              );
+            },
+            child: Container(
+              margin: const EdgeInsets.only(right: 12, top: 8),
+              width: width - (width * .4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(width: .5),
+              ),
+              child: Column(
+                children: [
+                  Container(
+                    height: height * .175,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(width: .5),
+                        image: DecorationImage(
+                            image: NetworkImage(offers[index].image),
+                            fit: BoxFit.cover)),
+                  ),
+                  kHight10,
+                  Row(
+                    children: [
+                      kWidth10,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            offers[index].offerTitle,
+                            style: boldBlack,
+                          ),
+                          Text(
+                            offers[index].sellerId.toString(),
+                            style: semiBoldGrey,
+                          ),
+                          Row(
+                            children: [
+                              const Text('ends with: '),
+                              Text(
+                                DateFormat.yMMMMd('en_US').format(
+                                    DateTime.parse(offers[index].endDate)),
+                                style: semiBoldGreen,
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      CircleAvatar(
+                        radius: 23,
+                        child: CircleAvatar(
+                          radius: 22,
+                          backgroundColor: Colors.white,
+                          child: Text(
+                              '${offers[index].offerPercentage.toString()}%'),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           );
         },
