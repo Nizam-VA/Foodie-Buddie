@@ -38,7 +38,7 @@ class ScreenCart extends StatelessWidget {
           return state is GetAllCartItemsState
               ? state.cartItems.isEmpty
                   ? Center(
-                      child: Image.asset('assets/images/icons/empty-cart.gif'),
+                      child: Image.asset('assets/images/icons/cart-empty.gif'),
                     )
                   : SingleChildScrollView(
                       child: Padding(

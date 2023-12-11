@@ -88,4 +88,28 @@ class AddressApiServices {
       return [];
     }
   }
+
+  Future<Address?> getAddressById(int addressId) async {
+    try {
+      final token = await getToken();
+      final response = await dio.get(
+        '${ApiEndPoints.getAddressById}$addressId',
+        options: Options(
+          headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+            'Authorization': 'Bearer $token',
+          },
+        ),
+      );
+      if (response.statusCode == 200) {
+        final body = response.data as Map;
+        final result = body['address'];
+        final address = Address.fromJson(result);
+        return address;
+      }
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 }

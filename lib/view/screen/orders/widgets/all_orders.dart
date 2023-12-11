@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:foodiebuddie/controller/api_services/address/api_calls.dart';
+import 'package:foodiebuddie/model/address.dart';
 import 'package:foodiebuddie/model/order.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 import 'package:foodiebuddie/utils/text_styles.dart';
@@ -34,10 +36,25 @@ class AllOrders extends StatelessWidget {
         itemCount: order.length,
         itemBuilder: (context, index) {
           return InkWell(
-            onTap: () {
+            onTap: () async {
+              final address = await AddressApiServices()
+                  .getAddressById(order[index].addressId);
               Navigator.of(context).push(
                 MaterialPageRoute(
-                  builder: (context) => ScreenOrderDetails(order: order[index]),
+                  builder: (context) => ScreenOrderDetails(
+                    order: order[index],
+                    address: address ??
+                        Address(
+                          addressId: 0,
+                          userId: 0,
+                          district: 'district',
+                          houseName: 'houseName',
+                          name: 'name',
+                          phone: 'phone',
+                          pinCode: 'pinCode',
+                          street: 'street',
+                        ),
+                  ),
                 ),
               );
             },

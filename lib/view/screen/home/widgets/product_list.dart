@@ -20,8 +20,12 @@ class ProductListWidget extends StatelessWidget {
   final List<Offer> offers;
   @override
   Widget build(BuildContext context) {
-    context.read<RestaurantBloc>().add(RestaurantEvent());
-
+    // context.read<RestaurantBloc>().add(RestaurantEvent());
+    for (int i = 0; i < offers.length; i++) {
+      context
+          .read<RestaurantBloc>()
+          .add(GetRestaurantByIdEvent(sellerId: offers[i].sellerId));
+    }
     return SizedBox(
       height: height * .275,
       child: ListView.builder(
@@ -29,6 +33,9 @@ class ProductListWidget extends StatelessWidget {
         itemCount: offers.length,
         scrollDirection: Axis.horizontal,
         itemBuilder: (context, index) {
+          // context
+          //     .read<RestaurantBloc>()
+          //     .add(GetRestaurantByIdEvent(sellerId: offers[index].sellerId));
           return InkWell(
             onTap: () {
               Navigator.of(context).push(
@@ -53,11 +60,13 @@ class ProductListWidget extends StatelessWidget {
                   Container(
                     height: height * .175,
                     decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        border: Border.all(width: .5),
-                        image: DecorationImage(
-                            image: NetworkImage(offers[index].image),
-                            fit: BoxFit.cover)),
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(width: .5),
+                      image: DecorationImage(
+                        image: NetworkImage(offers[index].image),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                   kHight10,
                   Row(
@@ -70,9 +79,13 @@ class ProductListWidget extends StatelessWidget {
                             offers[index].offerTitle,
                             style: boldBlack,
                           ),
-                          Text(
-                            offers[index].sellerId.toString(),
-                            style: semiBoldGrey,
+                          BlocBuilder<RestaurantBloc, RestaurantState>(
+                            builder: (context, state) {
+                              return Text(
+                                state.seller?.name ?? 'Ajwa',
+                                style: semiBoldGrey,
+                              );
+                            },
                           ),
                           Row(
                             children: [

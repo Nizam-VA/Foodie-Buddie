@@ -1,8 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:foodiebuddie/controller/api_services/checkout/api_calls.dart';
 import 'package:foodiebuddie/model/checkout_response.dart';
+import 'package:foodiebuddie/model/verify_payment.dart';
+import 'package:foodiebuddie/view/screen/main/screen_main.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
@@ -14,21 +15,60 @@ class ScreenPayment extends StatefulWidget {
 }
 
 class _ScreenPaymentState extends State<ScreenPayment> {
-  var razorpay = Razorpay();
-  // int paymentId = 0;
+  Razorpay? _razorpay;
+
+  void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+    Fluttertoast.showToast(
+        msg: 'SUCCESS PAYMENT: ${response.paymentId}', timeInSecForIosWeb: 4);
+    try {
+      final payment = VerifyPayment(
+        razorpayOrderId: response.orderId!,
+        razorpayPaymentId: response.paymentId!,
+        razorpaySignature: response.signature!,
+      );
+      // Call the verifyPayment method from the CheckOutApiServices
+      final value = await CheckOutApiServices().verifyPayment(payment);
+
+      // Check the response from the API and handle accordingly
+      if (value) {
+        // Payment verification successful, you can perform further actions if needed.
+        print("Payment verification successful: ${value}");
+        Navigator.of(context).pushAndRemoveUntil(
+            MaterialPageRoute(builder: (context) => ScreenMain()),
+            (route) => false);
+      } else {
+        // Payment verification failed, handle the failure case.
+        print("Payment verification failed: ${value}");
+      }
+    } catch (error) {
+      // Handle any exceptions that may occur during the API call.
+      print("Error during payment verification: $error");
+    }
+  }
+
+  void _handlePaymentError(PaymentFailureResponse response) {
+    Fluttertoast.showToast(
+        msg: 'Error PAYMENT: ${response.code}', timeInSecForIosWeb: 4);
+  }
+
+  void _handleExternalWallet(ExternalWalletResponse response) {
+    Fluttertoast.showToast(
+        msg: 'Wallet PAYMENT: ${response.walletName}', timeInSecForIosWeb: 4);
+  }
 
   @override
   void initState() {
-    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
-    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
-    razorpay.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
+    _razorpay = Razorpay();
+    _razorpay?.on(Razorpay.EVENT_PAYMENT_SUCCESS, _handlePaymentSuccess);
+    _razorpay?.on(Razorpay.EVENT_PAYMENT_ERROR, _handlePaymentError);
+    _razorpay?.on(Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
     super.initState();
   }
 
   @override
   void dispose() {
     super.dispose();
-    razorpay.clear();
+    _razorpay?.clear();
   }
 
   @override
@@ -40,7 +80,7 @@ class _ScreenPaymentState extends State<ScreenPayment> {
           width: width,
           text: 'Proceed to pay',
           onPressed: () async {
-            razorpay = Razorpay();
+            print(widget.response.key);
             var options = {
               'key': widget.response.key, //test
               'amount': (widget.response.totalPrice -
@@ -57,67 +97,67 @@ class _ScreenPaymentState extends State<ScreenPayment> {
                 'email': widget.response.email
               }
             };
-            razorpay.open(options);
+            _razorpay?.open(options);
           },
         ),
       ),
     );
   }
 
-  Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
-    // orderId = 12123;
-    // razorpayId = response.paymentId;
-    Fluttertoast.showToast(
-        msg: "SUCCESS: ${response.paymentId}", timeInSecForIosWeb: 4);
-  }
+//   Future<void> _handlePaymentSuccess(PaymentSuccessResponse response) async {
+//     // orderId = 12123;
+//     // razorpayId = response.paymentId;
+//     Fluttertoast.showToast(
+//         msg: "SUCCESS: ${response.paymentId}", timeInSecForIosWeb: 4);
+//   }
 
-  // void _handlePaymentSuccess(PaymentSuccessResponse response) async {
-  //   print('hello successful');
-  //   final payment = VerifyPayment(
-  //     razorpayOrderId: response.orderId!,
-  //     razorpayPaymentId: response.paymentId!,
-  //     razorpaySignature: response.signature!,
-  //   );
-  //   try {
-  //     // Call the verifyPayment method from the CheckOutApiServices
-  //     final value = await CheckOutApiServices().verifyPayment(payment);
+//   // void _handlePaymentSuccess(PaymentSuccessResponse response) async {
+//   //   print('hello successful');
+//   //   final payment = VerifyPayment(
+//   //     razorpayOrderId: response.orderId!,
+//   //     razorpayPaymentId: response.paymentId!,
+//   //     razorpaySignature: response.signature!,
+//   //   );
+//   //   try {
+//   //     // Call the verifyPayment method from the CheckOutApiServices
+//   //     final value = await CheckOutApiServices().verifyPayment(payment);
 
-  //     // Check the response from the API and handle accordingly
-  //     if (value) {
-  //       // Payment verification successful, you can perform further actions if needed.
-  //       print("Payment verification successful: ${value}");
-  //       Navigator.of(context).pushAndRemoveUntil(
-  //           MaterialPageRoute(builder: (context) => ScreenMain()),
-  //           (route) => false);
-  //     } else {
-  //       // Payment verification failed, handle the failure case.
-  //       print("Payment verification failed: ${value}");
-  //     }
-  //   } catch (error) {
-  //     // Handle any exceptions that may occur during the API call.
-  //     print("Error during payment verification: $error");
-  //   }
-  //   Fluttertoast.showToast(
-  //       msg: "Payment Success : ${response.paymentId}",
-  //       toastLength: Toast.LENGTH_SHORT,
-  //       timeInSecForIosWeb: 1,
-  //       backgroundColor: Colors.green,
-  //       textColor: Colors.white,
-  //       fontSize: 16.0);
-  // }
+//   //     // Check the response from the API and handle accordingly
+//   //     if (value) {
+//   //       // Payment verification successful, you can perform further actions if needed.
+//   //       print("Payment verification successful: ${value}");
+//   //       Navigator.of(context).pushAndRemoveUntil(
+//   //           MaterialPageRoute(builder: (context) => ScreenMain()),
+//   //           (route) => false);
+//   //     } else {
+//   //       // Payment verification failed, handle the failure case.
+//   //       print("Payment verification failed: ${value}");
+//   //     }
+//   //   } catch (error) {
+//   //     // Handle any exceptions that may occur during the API call.
+//   //     print("Error during payment verification: $error");
+//   //   }
+//   //   Fluttertoast.showToast(
+//   //       msg: "Payment Success : ${response.paymentId}",
+//   //       toastLength: Toast.LENGTH_SHORT,
+//   //       timeInSecForIosWeb: 1,
+//   //       backgroundColor: Colors.green,
+//   //       textColor: Colors.white,
+//   //       fontSize: 16.0);
+//   // }
 
-  void _handlePaymentError(PaymentFailureResponse response) {
-    print('hello failure');
-    Fluttertoast.showToast(
-        msg: "Payment  Failed Try again",
-        toastLength: Toast.LENGTH_SHORT,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.red,
-        textColor: Colors.white,
-        fontSize: 16.0);
-  }
+//   void _handlePaymentError(PaymentFailureResponse response) {
+//     print('hello failure');
+//     Fluttertoast.showToast(
+//         msg: "Payment  Failed Try again",
+//         toastLength: Toast.LENGTH_SHORT,
+//         timeInSecForIosWeb: 1,
+//         backgroundColor: Colors.red,
+//         textColor: Colors.white,
+//         fontSize: 16.0);
+//   }
 
-  void _handleExternalWallet(ExternalWalletResponse response) {
-    log('😊😊😊😊external handler');
-  }
+//   void _handleExternalWallet(ExternalWalletResponse response) {
+//     log('😊😊😊😊external handler');
+//   }
 }

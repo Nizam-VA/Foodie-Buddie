@@ -2,7 +2,8 @@ part of 'restaurant_bloc.dart';
 
 class RestaurantState {
   final List<Seller> restaurants;
-  RestaurantState({required this.restaurants});
+  final Seller? seller;
+  RestaurantState({required this.restaurants, this.seller});
 }
 
 final class RestaurantInitial extends RestaurantState {

@@ -21,5 +21,6 @@ final class GetDishBySellerAndCategory extends DishEvent {
 
 final class SearchDishEvent extends DishEvent {
   final String query;
-  SearchDishEvent({required this.query});
+  final int sellerId;
+  SearchDishEvent({required this.query, required this.sellerId});
 }

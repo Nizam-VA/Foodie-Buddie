@@ -16,12 +16,14 @@ class ApiEndPoints {
   static const addNewAddress = '/profile/addAddress';
   static const updateAddress = '/profile/address/';
   static const getAllAddresses = '/profile/address';
+  static const getAddressById = '/profile/address/';
   static const getAllCoupons = '/coupons';
   static const getAvailableCoupons = '/coupons/available';
   static const getUserProfile = '/profile';
   static const updateUserProfile = '/profile/edit';
   static const checkOut = '/cart/checkout';
   static const getAllOrders = '/orders';
+  static const getOrderById = '/orders/';
   static const verifyPayment = '/order/verifyPayment';
   static const getAllOffers = '/offers';
 }

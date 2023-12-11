@@ -29,7 +29,7 @@ class ScreenRestaurantDishes extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SearchTextField(text: 'Search foods...'),
+            SearchTextField(text: 'Search foods...', sellerId: seller.id),
             kHight20,
             const SectionHead(heading: 'All Dishes'),
             BlocBuilder<DishBloc, DishState>(
