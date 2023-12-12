@@ -9,23 +9,9 @@ import 'package:foodiebuddie/view/screen/order_details/screen_order_details.dart
 import 'package:intl/intl.dart';
 
 class AllOrders extends StatelessWidget {
-  const AllOrders({
-    super.key,
-    required this.count,
-    required this.orderId,
-    required this.itemCount,
-    required this.orderDate,
-    required this.price,
-    required this.orderStatus,
-    required this.order,
-  });
-  final int count;
+  const AllOrders({super.key, required this.order});
   final List<Order> order;
-  final List<String> orderId;
-  final List<String> itemCount;
-  final List<String> orderDate;
-  final List<String> price;
-  final List<String> orderStatus;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
@@ -96,12 +82,12 @@ class AllOrders extends StatelessWidget {
                             children: [
                               const Text('Order Id:  '),
                               Text(
-                                orderId[index],
+                                order[index].orderId.toString(),
                                 overflow: TextOverflow.ellipsis,
                                 style: boldGreen,
                               ),
                               Text(
-                                '   ${itemCount[index]} items',
+                                '   ${order[index].itemCount} items',
                                 style: boldBlack,
                               )
                             ],
@@ -111,14 +97,8 @@ class AllOrders extends StatelessWidget {
                             children: [
                               const Text('Order on: '),
                               Text(
-                                DateFormat.yMMMMd('en_US').format(
-                                  DateTime(
-                                      int.parse(
-                                          orderDate[index].substring(0, 4)),
-                                      int.parse(
-                                          orderDate[index].substring(5, 7)),
-                                      int.parse(
-                                          orderDate[index].substring(9, 10))),
+                                DateFormat(" d MMM yyyy").format(
+                                  DateTime.parse(order[index].orderDate),
                                 ),
                                 style: semiBoldBlack,
                               ),
@@ -129,9 +109,14 @@ class AllOrders extends StatelessWidget {
                     ],
                   ),
                   kHight10,
-                  ItemRow(keyString: 'Price', value: '₹ ${price[index]}'),
+                  ItemRow(
+                      keyString: 'Price',
+                      value:
+                          '₹ ${order[index].totalPrice - order[index].deliveryCharge}'),
                   divider1,
-                  ItemRow(keyString: 'Order status', value: orderStatus[index])
+                  ItemRow(
+                      keyString: 'Order status',
+                      value: order[index].orderStatus)
                 ],
               ),
             ),

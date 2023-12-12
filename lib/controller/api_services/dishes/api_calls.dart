@@ -87,10 +87,11 @@ class DishApiServices {
     }
   }
 
-  Future<List<Dish>> searchDishes(String query) async {
+  Future<List<Dish>> searchDishes(String query, int sellerId) async {
     try {
       final token = await getToken();
-      final response = await dio.get(ApiEndPoints.searchDish + query);
+      final response =
+          await dio.get('/search/dishes?q=$query&seller=$sellerId');
       if (response.statusCode == 200) {
         final body = response.data as Map;
         final result = body['dishList'] as List;

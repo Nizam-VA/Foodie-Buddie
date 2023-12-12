@@ -31,6 +31,8 @@ class ApiServices {
       final response = await http.post(Uri.parse(url), body: data);
       debugPrint('${response.statusCode}');
       if (response.statusCode == 200) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setBool('LOGIN', true);
         final body = jsonDecode(response.body) as Map;
         final sharedPreferences = await SharedPreferences.getInstance();
         sharedPreferences.setString('token', body['token']);

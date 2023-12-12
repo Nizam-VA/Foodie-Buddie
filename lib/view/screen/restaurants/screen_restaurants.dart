@@ -43,8 +43,6 @@ class ScreenRestaurants extends StatelessWidget {
                                 itemBuilder: ((context, index) {
                                   return InkWell(
                                     onTap: () async {
-                                      // await DishApiServices().fetchAllDishesBySellerId(
-                                      //     state.restaurants[index].id);
                                       Navigator.of(context).push(
                                         MaterialPageRoute(
                                           builder: (context) =>

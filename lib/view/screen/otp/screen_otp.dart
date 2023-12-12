@@ -103,7 +103,7 @@ class ScreenOTP extends StatelessWidget {
                     if (value) {
                       showSnack(context, Colors.green,
                           'Account created successfully');
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (context) => ScreenMain(),
                         ),

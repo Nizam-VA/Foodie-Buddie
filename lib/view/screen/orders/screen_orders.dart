@@ -16,6 +16,7 @@ class ScreenOrders extends StatelessWidget {
         backgroundColor: Colors.green[50],
         appBar: AppBar(
           backgroundColor: Colors.green,
+          centerTitle: true,
           title: const Text(
             'Orders',
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
@@ -41,14 +42,6 @@ class ScreenOrders extends StatelessWidget {
             builder: (context, state) {
               return AllOrders(
                 order: state.orders,
-                count: state.orders.length,
-                orderId: state.orders.map((e) => e.orderId.toString()).toList(),
-                itemCount:
-                    state.orders.map((e) => e.itemCount.toString()).toList(),
-                orderDate: state.orders.map((e) => e.orderDate).toList(),
-                price:
-                    state.orders.map((e) => e.totalPrice.toString()).toList(),
-                orderStatus: state.orders.map((e) => e.orderStatus).toList(),
               );
             },
           ),
@@ -57,17 +50,8 @@ class ScreenOrders extends StatelessWidget {
               List<Order> orders = state.orders
                   .where((e) => e.orderStatus.toLowerCase() == 'delivered')
                   .toList();
-              print(orders.length);
               return AllOrders(
                 order: orders,
-                count: orders.length,
-                orderId:
-                    orders.map((e) => e.transactionId.substring(24)).toList(),
-                itemCount: orders.map((e) => e.itemCount.toString()).toList(),
-                orderDate:
-                    orders.map((e) => e.orderDate.substring(0, 10)).toList(),
-                price: orders.map((e) => e.totalPrice.toString()).toList(),
-                orderStatus: orders.map((e) => e.orderStatus).toList(),
               );
             },
           ),
@@ -76,17 +60,8 @@ class ScreenOrders extends StatelessWidget {
               List<Order> orders = state.orders
                   .where((e) => e.orderStatus.toLowerCase() == 'ordered')
                   .toList();
-              print(orders.length);
               return AllOrders(
                 order: orders,
-                count: orders.length,
-                orderId:
-                    orders.map((e) => e.transactionId.substring(24)).toList(),
-                itemCount: orders.map((e) => e.itemCount.toString()).toList(),
-                orderDate:
-                    orders.map((e) => e.orderDate.substring(0, 10)).toList(),
-                price: orders.map((e) => e.totalPrice.toString()).toList(),
-                orderStatus: orders.map((e) => e.orderStatus).toList(),
               );
             },
           ),

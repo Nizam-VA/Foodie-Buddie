@@ -4,8 +4,8 @@ class CartItem {
   final int sellerId;
   final String name;
   final String description;
-  final int price;
-  final int salePrice;
+  final num price;
+  final num salePrice;
   final String imageUrl;
   final int categoryId;
   final bool isVeg;

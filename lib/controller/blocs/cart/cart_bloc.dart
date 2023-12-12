@@ -138,7 +138,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
   int sum(List<CartItem> cartItems) {
     int total = 0;
     for (int i = 0; i < cartItems.length; i++) {
-      total += cartItems[i].price * cartItems[i].quantity;
+      total += cartItems[i].price.round() * cartItems[i].quantity;
     }
     return total;
   }

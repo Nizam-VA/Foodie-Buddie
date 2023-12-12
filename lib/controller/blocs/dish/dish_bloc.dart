@@ -28,10 +28,7 @@ class DishBloc extends Bloc<DishEvent, DishState> {
 
     on<SearchDishEvent>((event, emit) async {
       List<Dish> dishes =
-          await DishApiServices().fetchAllDishesBySellerId(event.sellerId);
-      dishes = dishes
-          .where((dish) => dish.name.toLowerCase() == event.query.toLowerCase())
-          .toList();
+          await DishApiServices().searchDishes(event.query, event.sellerId);
       emit(DishState(isLoading: false, dishes: dishes));
     });
   }

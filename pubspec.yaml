@@ -50,6 +50,7 @@ dependencies:
   freezed: ^2.4.5
   intl: ^0.18.1
   order_tracker_zen: ^1.0.0+4
+  casa_vertical_stepper: ^0.0.5
   
 
 dev_dependencies:
