@@ -5,7 +5,7 @@ class Offer {
   final String offerTitle;
   final int sellerId;
   final int categoryId;
-  final int offerPercentage;
+  final num offerPercentage;
   final String image;
   final String startDate;
   final String endDate;
