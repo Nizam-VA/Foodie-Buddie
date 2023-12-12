@@ -53,13 +53,6 @@ class DishContainer extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // const CircleAvatar(
-              //   radius: 18,
-              //   backgroundColor: Colors.white,
-              //   backgroundImage:
-              //       AssetImage('assets/images/icons/restaurant.png'),
-              // ),
-              // kWidth10,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [Text(dish.name), Text('₹ ${dish.price}')],

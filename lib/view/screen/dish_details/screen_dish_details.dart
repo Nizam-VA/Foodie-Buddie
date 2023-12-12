@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foodiebuddie/controller/blocs/cart/cart_bloc.dart';
 import 'package:foodiebuddie/model/dish.dart';
 import 'package:foodiebuddie/model/seller.dart';
 import 'package:foodiebuddie/utils/constants.dart';
+import 'package:foodiebuddie/view/screen/dish_details/widgets/add_to_cart.dart';
+import 'package:foodiebuddie/view/screen/dish_details/widgets/image_container.dart';
+import 'package:foodiebuddie/view/screen/dish_details/widgets/restaurant_banner.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
 
@@ -29,22 +30,7 @@ class ScreenDishDetails extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Container(
-                  width: width,
-                  height: height * .3,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Colors.green,
-                    image: DecorationImage(
-                      image: dish.imageUrl == ''
-                          ? const AssetImage(
-                                  'assets/images/categories/dish.jpg')
-                              as ImageProvider
-                          : NetworkImage(dish.imageUrl),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
+                ImageContainer(width: width, height: height, dish: dish),
                 kHight20,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -54,67 +40,12 @@ class ScreenDishDetails extends StatelessWidget {
                   ],
                 ),
                 kHight20,
-                Row(
-                  children: [
-                    CircleAvatar(
-                      radius: 31,
-                      backgroundColor: Colors.green,
-                      child: CircleAvatar(
-                        radius: 30,
-                        backgroundColor: Colors.white,
-                        child: Image.asset(
-                          'assets/images/icons/restaurant.png',
-                          height: 36,
-                        ),
-                      ),
-                    ),
-                    kWidth10,
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SectionHead(heading: seller.name),
-                        Text(seller.description)
-                      ],
-                    ),
-                  ],
-                ),
+                RestaurantBanner(seller: seller),
                 kHight20,
                 Text(dish.description),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                SizedBox(
-                  width: width - 125,
-                  height: height * .075,
-                  child: ElevatedButton.icon(
-                    onPressed: () async {
-                      context.read<CartBloc>().add(AddToCartEvent(
-                          dishId: dish.dishId, context: context));
-                    },
-                    icon: const Icon(Icons.shopping_bag),
-                    label: const Text('Add to bag'),
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                  ),
-                ),
-                IconButton(
-                    style: IconButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: BorderSide(width: 1, color: Colors.green)),
-                    ),
-                    onPressed: () {},
-                    icon: const Icon(
-                      Icons.favorite,
-                      size: 30,
-                      color: Colors.green,
-                    ))
-              ],
-            ),
+            AddToCartButton(width: width, height: height, dish: dish),
           ],
         ),
       ),

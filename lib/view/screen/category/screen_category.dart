@@ -27,14 +27,15 @@ class ScreenCategory extends StatelessWidget {
         child: BlocBuilder<DishBloc, DishState>(
           builder: (context, state) {
             if (state.isLoading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             }
             return state.dishes.isEmpty
                 ? Center(
                     child: Image.asset(
-                    'assets/images/icons/empty.gif',
-                    width: width * .5,
-                  ))
+                      'assets/images/icons/empty.gif',
+                      width: width * .5,
+                    ),
+                  )
                 : GridView.builder(
                     itemCount: state.dishes.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(

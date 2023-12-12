@@ -20,19 +20,12 @@ class ScreenAddAddress extends StatefulWidget {
 
 class _ScreenAddAddressState extends State<ScreenAddAddress> {
   final formKey = GlobalKey<FormState>();
-
   final nameController = TextEditingController();
-
   final houseNameController = TextEditingController();
-
   final streetController = TextEditingController();
-
   final pinodeController = TextEditingController();
-
   final mobileController = TextEditingController();
-
   final districtController = TextEditingController();
-
   initControllers() {
     if (widget.address != null) {
       nameController.text = widget.address!.name;
@@ -55,7 +48,6 @@ class _ScreenAddAddressState extends State<ScreenAddAddress> {
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.of(context).size.width;
-    // final height = MediaQuery.of(context).size.height;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56),

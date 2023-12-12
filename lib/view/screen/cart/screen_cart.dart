@@ -4,14 +4,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/cart/cart_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/restaurant/restaurant_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
-import 'package:foodiebuddie/view/screen/addresses/screen_addresses.dart';
+import 'package:foodiebuddie/view/screen/cart/widgets/add_address_button.dart';
+import 'package:foodiebuddie/view/screen/cart/widgets/apply_coupon_container.dart';
 import 'package:foodiebuddie/view/screen/cart/widgets/item_row.dart';
-import 'package:foodiebuddie/view/screen/coupons/screen_coupons.dart';
 import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/screen/main/screen_main.dart';
 import 'package:foodiebuddie/view/screen/restaurant_dishes/screen_restaurant_dishes.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
-import 'package:foodiebuddie/view/widgets/button_widget.dart';
 import 'package:input_quantity/input_quantity.dart';
 
 class ScreenCart extends StatelessWidget {
@@ -49,7 +48,6 @@ class ScreenCart extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(18),
                               width: width,
-                              // height: height * .65,
                               decoration: BoxDecoration(
                                 color: Colors.white,
                                 borderRadius: BorderRadius.circular(20),
@@ -71,7 +69,6 @@ class ScreenCart extends StatelessWidget {
                                                     ? state.cartItems[index]
                                                         .sellerId
                                                     : 0;
-                                                print(sellerId);
                                                 return SizedBox(
                                                   height: height * .075,
                                                   child: Row(
@@ -239,38 +236,7 @@ class ScreenCart extends StatelessWidget {
                             kHight20,
                             const SectionHead(heading: 'Apply Coupon'),
                             kHight10,
-                            Container(
-                              width: width,
-                              height: height * .2,
-                              padding: const EdgeInsets.all(16),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  const Text(
-                                    'Earn cashback on your order.',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                  const SizedBox(height: 12),
-                                  ButtonWidget(
-                                    width: width * 1.5,
-                                    text: 'Apply Coupon',
-                                    onPressed: () async {
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => ScreenCoupons(),
-                                        ),
-                                      );
-                                    },
-                                  )
-                                ],
-                              ),
-                            ),
+                            ApplyCouponContainer(width: width, height: height),
                             kHight20,
                             const SectionHead(heading: 'Bill Details'),
                             kHight10,
@@ -360,19 +326,8 @@ class ScreenCart extends StatelessWidget {
                                     ],
                                   ),
                                   kHight10,
-                                  ButtonWidget(
-                                    width: width * 1.3,
-                                    text: 'Add or select address',
-                                    onPressed: () async {
-                                      print(couponCode);
-                                      Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                          builder: (context) => ScreenAddresses(
-                                              couponCode: couponCode),
-                                        ),
-                                      );
-                                    },
-                                  )
+                                  AddAddressButton(
+                                      width: width, couponCode: couponCode)
                                 ],
                               ),
                             )

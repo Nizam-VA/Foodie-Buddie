@@ -11,17 +11,12 @@ import 'package:foodiebuddie/view/screen/home/widgets/section_head.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 
-class ScreenCheckout extends StatefulWidget {
+class ScreenCheckout extends StatelessWidget {
   ScreenCheckout(
       {super.key, required this.couponCode, required this.addressId});
   final String couponCode;
   final int addressId;
 
-  @override
-  State<ScreenCheckout> createState() => _ScreenCheckoutState();
-}
-
-class _ScreenCheckoutState extends State<ScreenCheckout> {
   int total = 0;
 
   List<String> values = ['COD', 'ONLINE'];
@@ -139,25 +134,20 @@ class _ScreenCheckoutState extends State<ScreenCheckout> {
                     print(state.method);
                     if (state.method == 'COD') {
                       final checkOut = CheckOut(
-                        addressId: widget.addressId.toString(),
-                        couponCode: widget.couponCode,
+                        addressId: addressId.toString(),
+                        couponCode: couponCode,
                         paymentMethod: state.method,
                       );
                       context.read<CartBloc>().add(
                           CheckoutEvent(checkOut: checkOut, context: context));
                     } else if (state.method == 'ONLINE') {
                       final checkOut = CheckOut(
-                        addressId: widget.addressId.toString(),
-                        couponCode: widget.couponCode,
+                        addressId: addressId.toString(),
+                        couponCode: couponCode,
                         paymentMethod: state.method,
                       );
                       context.read<CartBloc>().add(
                           CheckoutEvent(checkOut: checkOut, context: context));
-                      // Navigator.of(context).push(
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const ScreenPayment(response: ),
-                      //   ),
-                      // );
                     }
                   },
                 );

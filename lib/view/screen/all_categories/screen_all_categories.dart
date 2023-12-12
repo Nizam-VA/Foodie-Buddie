@@ -10,7 +10,6 @@ class ScreenAllCategories extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
     final height = MediaQuery.of(context).size.height;
     context.read<CategoryBloc>().add(CategoryEvent());
     return Scaffold(
@@ -27,11 +26,8 @@ class ScreenAllCategories extends StatelessWidget {
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 3),
               itemBuilder: (context, index) {
-                print(state.categories[index].iconUrl);
                 return InkWell(
                   onTap: () async {
-                    // final dishes = await DishApiServices()
-                    //     .fetchAllDishesByCategory(state.categories[index].id);
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -72,7 +68,6 @@ class ScreenAllCategories extends StatelessWidget {
           },
         ),
       ),
-      // floatingActionButton: const FloatingButton(),
     );
   }
 }

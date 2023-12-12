@@ -61,7 +61,7 @@ class ScreenOfferDetails extends StatelessWidget {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
+                              SizedBox(
                                 width: width * .5,
                                 height: height * .2,
                                 child: Column(
@@ -93,10 +93,11 @@ class ScreenOfferDetails extends StatelessWidget {
                                       color: Colors.green, width: .1),
                                   borderRadius: BorderRadius.circular(20),
                                   image: DecorationImage(
-                                      image: NetworkImage(
-                                        state.dishes[index].imageUrl,
-                                      ),
-                                      fit: BoxFit.cover),
+                                    image: NetworkImage(
+                                      state.dishes[index].imageUrl,
+                                    ),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               )
                             ],

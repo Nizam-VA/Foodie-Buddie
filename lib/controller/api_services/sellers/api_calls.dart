@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:foodiebuddie/model/seller.dart';
 import 'package:foodiebuddie/utils/tokens.dart';
 import 'package:foodiebuddie/utils/urls.dart';
@@ -11,15 +10,11 @@ import 'package:http/http.dart' as http;
 class SellerApiServices {
   Dio dio = Dio(BaseOptions(baseUrl: ApiEndPoints.baseUrl));
   static const String baseUrl = ApiEndPoints.baseUrl;
-
   Future<List<Seller>> fetchAllSellers() async {
     const url = '$baseUrl/user/sellers';
 
     String bearer = await getToken();
-
     try {
-      print('hello');
-      print('$bearer is your token');
       final response = await http.get(Uri.parse(url), headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -33,7 +28,6 @@ class SellerApiServices {
         for (int i = 0; i < result.length; i++) {
           final seller = Seller.fromJson(result[i]);
           sellers.add(seller);
-          debugPrint(seller.name);
         }
         return sellers;
       } else {

@@ -47,15 +47,9 @@ class ScreenHome extends StatelessWidget {
                         child: const Text('View all'))
                   ],
                 ),
-                // kHight10,
                 CategoriesGridview(height: height, width: width),
                 kHight10,
                 const Divider(thickness: 2),
-                // kHight10,
-                // const SectionHead(heading: 'New & Trending'),
-                // ProductListWidget(height: height, width: width, count: 5),
-                // kHight10,
-                // const Divider(thickness: 2),
                 kHight10,
                 const SectionHead(heading: 'Best offers'),
                 BlocBuilder<OfferBloc, OfferState>(
