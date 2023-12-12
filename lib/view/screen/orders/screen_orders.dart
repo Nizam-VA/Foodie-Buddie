@@ -58,7 +58,10 @@ class ScreenOrders extends StatelessWidget {
           BlocBuilder<OrderBloc, OrderState>(
             builder: (context, state) {
               List<Order> orders = state.orders
-                  .where((e) => e.orderStatus.toLowerCase() == 'ordered')
+                  .where((e) =>
+                      e.orderStatus.toLowerCase() == 'ordered' ||
+                      e.orderStatus.toLowerCase() == 'pending' ||
+                      e.orderStatus.toLowerCase() == 'food ready')
                   .toList();
               return AllOrders(
                 order: orders,

@@ -98,7 +98,6 @@ class ScreenOTP extends StatelessWidget {
                         otp += controllers[i].text;
                       }
                     }
-                    print(otp);
                     bool value = await ApiServices().otpVerification(otp);
                     if (value) {
                       showSnack(context, Colors.green,
