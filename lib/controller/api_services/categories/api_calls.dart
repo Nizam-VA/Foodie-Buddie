@@ -40,13 +40,12 @@ class CategoriesApiServices {
     }
   }
 
-  Future<void> getCategoryById(int categoryId) async {
-    try {
-      final respons =
-          await dio.get('${ApiEndPoints.getCategoryById}$categoryId');
-      print(respons.data);
-    } catch (e) {
-      print(e.toString());
-    }
-  }
+  // Future<void> getCategoryById(int categoryId) async {
+  //   try {
+  //     final respons =
+  //         await dio.get('${ApiEndPoints.getCategoryById}$categoryId');
+  //   } catch (e) {
+  //     print(e.toString());
+  //   }
+  // }
 }

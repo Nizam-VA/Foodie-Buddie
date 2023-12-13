@@ -10,7 +10,6 @@ import 'package:foodiebuddie/view/screen/profile/widgets/dialog.dart';
 import 'package:foodiebuddie/view/screen/profile/widgets/sub_text.dart';
 import 'package:foodiebuddie/view/screen/update_profile/screen_update_profiile.dart';
 import 'package:foodiebuddie/view/widgets/app_bar.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ScreenProfile extends StatelessWidget {
   const ScreenProfile({super.key});
@@ -100,10 +99,6 @@ class ScreenProfile extends StatelessWidget {
                         kHight10,
                         InkWell(
                             onTap: () async {
-                              final preferences =
-                                  await SharedPreferences.getInstance();
-                              preferences.setString('token', '');
-
                               showDialogBox(context);
                             },
                             child: const SectionHead(heading: 'Logout')),

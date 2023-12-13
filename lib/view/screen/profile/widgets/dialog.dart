@@ -21,9 +21,12 @@ showDialogBox(BuildContext context) {
             TextButton(
               child: const Text('Logout'),
               onPressed: () async {
-                SharedPreferences preferences =
+                final preferences = await SharedPreferences.getInstance();
+                preferences.setString('token', '');
+
+                SharedPreferences sPreferences =
                     await SharedPreferences.getInstance();
-                preferences.setBool('LOGIN', false);
+                sPreferences.setBool('LOGIN', false);
                 context
                     .read<BottomNavigationBloc>()
                     .add(BottomNavigationEvent(index: 0));

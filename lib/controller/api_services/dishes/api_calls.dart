@@ -19,8 +19,6 @@ class DishApiServices {
           },
         ),
       );
-      print(response.statusCode);
-      print(response.data);
       if (response.statusCode == 200) {
         final body = response.data as Map;
         final result = body['dishList'] as List;
@@ -50,7 +48,6 @@ class DishApiServices {
         List<Dish> dishes = [];
         for (int i = 0; i < result.length; i++) {
           final dish = Dish.fromJson(result[i]);
-          // print(dish.name);
           dishes.add(dish);
         }
         return dishes;
@@ -74,7 +71,6 @@ class DishApiServices {
         List<Dish> dishes = [];
         for (int i = 0; i < result.length; i++) {
           final dish = Dish.fromJson(result[i]);
-          // print(dish.name);
           dishes.add(dish);
         }
         return dishes;
@@ -98,7 +94,6 @@ class DishApiServices {
         List<Dish> dishes = [];
         for (int i = 0; i < result.length; i++) {
           final dish = Dish.fromJson(result[i]);
-          print(dish.name);
           dishes.add(dish);
         }
         return dishes;

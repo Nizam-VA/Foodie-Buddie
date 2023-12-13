@@ -8,7 +8,6 @@ class AddressApiServices {
 
   Future<bool> addAddress(Address address) async {
     final token = await getToken();
-    print(address.toJson(address));
     try {
       final response = await dio.post(
         ApiEndPoints.addNewAddress,
@@ -21,8 +20,6 @@ class AddressApiServices {
         ),
         data: address.toJson(address),
       );
-      print(response.statusCode);
-      print(response.data);
       if (response.statusCode == 200) {
         return true;
       }

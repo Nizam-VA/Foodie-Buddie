@@ -23,7 +23,6 @@ class CheckOutApiServices {
         ),
         data: data,
       );
-      print(response.data);
       if (response.statusCode == 200) {
         final body = response.data as Map;
         CheckoutResponse checkoutResp;
@@ -42,7 +41,6 @@ class CheckOutApiServices {
   }
 
   Future<bool> verifyPayment(VerifyPayment payment) async {
-    print('hello😊😊😊');
     final token = await getToken();
     final data = payment.toJson(payment);
     try {
@@ -57,7 +55,6 @@ class CheckOutApiServices {
         ),
         data: data,
       );
-      print(response.data);
       if (response.statusCode == 200) {
         return true;
       } else {

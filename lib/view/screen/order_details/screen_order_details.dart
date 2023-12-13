@@ -72,13 +72,22 @@ class ScreenOrderDetails extends StatelessWidget {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text('${state.orderItems[index].name}:  '),
-                                    Text(
-                                      'X ${state.orderItems[index].quantity}',
-                                      style: semiBoldBlack,
-                                    ),
-                                    Text(
-                                      state.orderItems[index].price.toString(),
-                                      style: semiBoldBlack,
+                                    SizedBox(
+                                      width: width * .4,
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            'x ${state.orderItems[index].quantity}',
+                                            style: semiBoldBlack,
+                                          ),
+                                          Text(
+                                            '${state.orderItems[index].price * state.orderItems[index].quantity}',
+                                            style: semiBoldBlack,
+                                          ),
+                                        ],
+                                      ),
                                     )
                                   ],
                                 );

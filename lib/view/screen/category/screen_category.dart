@@ -61,7 +61,8 @@ class ScreenCategory extends StatelessWidget {
                           dish: state.dishes[index],
                         ),
                       );
-                    });
+                    },
+                  );
           },
         ),
       ),

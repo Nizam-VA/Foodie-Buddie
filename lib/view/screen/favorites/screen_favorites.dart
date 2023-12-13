@@ -72,12 +72,6 @@ class ScreenFavorites extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  // CircleAvatar(
-                                  //   radius: 18,
-                                  //   backgroundColor: Colors.white,
-                                  //   backgroundImage: AssetImage(''),
-                                  // ),
-                                  // kWidth10,
                                   Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,

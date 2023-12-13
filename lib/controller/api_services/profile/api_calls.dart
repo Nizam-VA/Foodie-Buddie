@@ -19,7 +19,6 @@ class ProfileApiServices {
           },
         ),
       );
-      print(response.data);
       if (response.statusCode == 200) {
         final body = response.data as Map;
         final result = body['user'] as Map<String, dynamic>;
@@ -53,7 +52,6 @@ class ProfileApiServices {
         ),
         data: data,
       );
-      print(response.data);
       if (response.statusCode == 200) {
         return true;
       } else {

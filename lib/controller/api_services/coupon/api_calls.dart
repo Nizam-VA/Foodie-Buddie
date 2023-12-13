@@ -20,7 +20,6 @@ class CouponApiServices {
         ),
       );
       if (response.statusCode == 200) {
-        print(response.data);
         final body = response.data as Map;
         final result = body['coupons'] as List;
         List<Coupon> coupons = [];
@@ -52,7 +51,6 @@ class CouponApiServices {
         ),
       );
       if (response.statusCode == 200) {
-        print(response.data);
         final body = response.data as Map;
         final result = body['coupons'] as List;
         List<Coupon> coupons = [];

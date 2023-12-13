@@ -21,14 +21,11 @@ class OrdersApiServices {
         ),
       );
       if (response.statusCode == 200) {
-        print(response.data);
         final body = response.data as Map;
         final result = body['orders'] as List;
         List<Order> orders = result.map((e) => Order.fromJson(e)).toList();
 
-        for (int i = 0; i < result.length; i++) {
-          print(orders[i].orderStatus);
-        }
+        for (int i = 0; i < result.length; i++) {}
 
         return orders;
       } else {

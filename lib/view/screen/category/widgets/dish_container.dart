@@ -4,8 +4,6 @@ import 'package:foodiebuddie/controller/blocs/favorites/favorites_bloc.dart';
 import 'package:foodiebuddie/model/dish.dart';
 import 'package:foodiebuddie/utils/constants.dart';
 
-ValueNotifier<List<int>> favoriteNotifier = ValueNotifier<List<int>>([]);
-
 class DishContainer extends StatelessWidget {
   const DishContainer(
       {super.key,
@@ -53,6 +51,13 @@ class DishContainer extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+              // const CircleAvatar(
+              //   radius: 18,
+              //   backgroundColor: Colors.white,
+              //   backgroundImage:
+              //       AssetImage('assets/images/icons/restaurant.png'),
+              // ),
+              // kWidth10,
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [Text(dish.name), Text('₹ ${dish.price}')],

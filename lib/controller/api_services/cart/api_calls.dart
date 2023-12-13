@@ -8,7 +8,6 @@ class CartApiServices {
 
   Future<bool> addToCart(int dishId) async {
     final token = await getToken();
-    print('${ApiEndPoints.addToCart}$dishId');
     try {
       final response = await dio.post(
         '${ApiEndPoints.addToCart}$dishId',
@@ -20,8 +19,6 @@ class CartApiServices {
           },
         ),
       );
-      print(response.statusCode);
-      print(response.data);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -46,7 +43,6 @@ class CartApiServices {
           },
         ),
       );
-      print(response.data);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -71,7 +67,6 @@ class CartApiServices {
           },
         ),
       );
-      print(response.data);
       if (response.statusCode == 200) {
         return true;
       } else {
@@ -97,7 +92,6 @@ class CartApiServices {
         ),
       );
       if (response.statusCode == 200) {
-        print(response.data);
         final body = response.data as Map;
         final data = body['cart'] as Map;
         final result = data['dishes'] as List;
@@ -105,7 +99,6 @@ class CartApiServices {
         // result.map((cartItem) => CartItem.fromJson(cartItem)).toList();
         for (int i = 0; i < result.length; i++) {
           final cartItem = CartItem.fromJson(result[i]);
-          print(cartItem.name);
           cartItems.add(cartItem);
         }
         return cartItems;
