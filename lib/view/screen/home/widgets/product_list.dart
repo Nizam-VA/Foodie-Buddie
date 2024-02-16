@@ -27,7 +27,7 @@ class ProductListWidget extends StatelessWidget {
           .add(GetRestaurantByIdEvent(sellerId: offers[i].sellerId));
     }
     return SizedBox(
-      height: height * .275,
+      height: height * .3,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: offers.length,
