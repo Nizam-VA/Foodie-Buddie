@@ -45,9 +45,9 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          fontFamily: GoogleFonts.urbanist().fontFamily,
-          primarySwatch: Colors.green,
-        ),
+            fontFamily: GoogleFonts.urbanist().fontFamily,
+            primarySwatch: Colors.green,
+            useMaterial3: false),
         home: const ScreenSplash(),
       ),
     );

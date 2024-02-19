@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodiebuddie/controller/blocs/login/login_bloc.dart';
 import 'package:foodiebuddie/utils/constants.dart';
+import 'package:foodiebuddie/utils/text_styles.dart';
 import 'package:foodiebuddie/view/screen/forgot_password/screen_forgot_password.dart';
 import 'package:foodiebuddie/view/widgets/button_widget.dart';
 import 'package:foodiebuddie/view/widgets/text_button_widget.dart';
@@ -117,6 +118,10 @@ class ScreenLogin extends StatelessWidget {
                       }
                     },
                   ),
+                  kHight30,
+                  const Text('Demo User', style: semiBoldBlack),
+                  const Text('Username: nizamasharaf@gmail.com'),
+                  const Text('Password: User@1234'),
                 ],
               )
             ],
